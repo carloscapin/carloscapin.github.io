@@ -1,0 +1,500 @@
+@font-face {
+    font-family: "Bodoni Moda";
+    src: url("../fonts/bodoni-moda-regular.ttf") format("truetype");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/manrope-latin.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 200 800;
+}
+
+@font-face {
+    font-family: "Pinyon Script";
+    src: url("../fonts/pinyon-script-latin.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+}
+
+:root {
+    color-scheme: dark;
+    font-family: "Manrope", Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    --paper: #f4f3ed;
+    --ink: #141511;
+    --white: #fffefa;
+    --pointer-x: 0px;
+    --pointer-y: 0px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 20rem;
+    background: #11120f;
+}
+
+body {
+    min-width: 20rem;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    color: var(--white);
+    background: #11120f;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.skip-link {
+    position: fixed;
+    z-index: 100;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 0.25rem;
+    color: #11120f;
+    background: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-decoration: none;
+    transform: translateY(-180%);
+    transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    background: #11120f;
+}
+
+.hero__background,
+.hero__shade,
+.hero__grain {
+    position: absolute;
+    inset: 0;
+}
+
+.hero__background {
+    z-index: -3;
+    background: #151612 url("../media/images/landing/gallery-background.png") center / cover no-repeat;
+    transform: scale(1.012);
+}
+
+.hero__shade {
+    z-index: 1;
+    background:
+        linear-gradient(90deg, rgba(7, 8, 7, 0.72) 0%, rgba(7, 8, 7, 0.43) 28%, rgba(7, 8, 7, 0.04) 61%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+}
+
+.hero__grain {
+    z-index: 2;
+    opacity: 0.22;
+    background-image:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 4px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 5px);
+    mix-blend-mode: soft-light;
+}
+
+.hero__meta {
+    position: absolute;
+    z-index: 10;
+    top: clamp(0.65rem, 1.65vh, 1.25rem);
+    right: clamp(0.85rem, 1.55vw, 1.9rem);
+    left: clamp(0.85rem, 1.55vw, 1.9rem);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: clamp(0.48rem, 0.58vw, 0.7rem);
+    font-weight: 750;
+    letter-spacing: 0.035em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.hero__meta p {
+    margin: 0;
+}
+
+.hero__meta p:nth-child(2) {
+    text-align: center;
+}
+
+.hero__meta p:last-child {
+    text-align: right;
+}
+
+.hero__copy {
+    position: absolute;
+    z-index: 5;
+    top: 27%;
+    left: clamp(0.85rem, 2.15vw, 2.6rem);
+    width: min(42vw, 50rem);
+}
+
+.hero__title {
+    display: grid;
+    justify-items: start;
+    margin: 0;
+    color: var(--white);
+    filter: drop-shadow(0 0.3rem 0.75rem rgba(0, 0, 0, 0.32));
+    font-family: "Bodoni Moda", "Bodoni MT", Didot, "Times New Roman", serif;
+    font-size: clamp(5rem, min(8.55vw, 17vh), 10.3rem);
+    font-weight: 400;
+    letter-spacing: -0.075em;
+    line-height: 0.72;
+    text-transform: uppercase;
+}
+
+.hero__title span {
+    display: block;
+}
+
+.hero__title span:last-child {
+    margin-left: 0.33em;
+}
+
+.hero__role {
+    margin: clamp(1rem, 2.4vh, 1.85rem) 0 0 17%;
+    color: rgba(255, 255, 255, 0.96);
+    font-size: clamp(0.56rem, min(0.72vw, 1.35vh), 0.86rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.polaroid {
+    position: absolute;
+    z-index: 6;
+    right: clamp(3.25rem, 9.5vw, 11.5rem);
+    bottom: clamp(1.15rem, 3.8vh, 2.6rem);
+    width: clamp(20rem, min(36vw, 67vh), 43rem);
+    padding: clamp(0.65rem, min(1vw, 1.7vh), 1.15rem);
+    padding-bottom: clamp(0.55rem, min(0.82vw, 1.4vh), 0.95rem);
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow:
+        0.12rem 0.16rem 0 rgba(255, 255, 255, 0.34),
+        0 1.6rem 3.6rem rgba(0, 0, 0, 0.55);
+    transform: translate3d(var(--pointer-x), var(--pointer-y), 0) rotate(-2.35deg);
+    transform-origin: 50% 55%;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.polaroid__photo {
+    position: relative;
+    aspect-ratio: 1 / 1.04;
+    overflow: hidden;
+    background: #20211f;
+}
+
+.polaroid__photo::after {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 2.4rem rgba(0, 0, 0, 0.13);
+    content: "";
+    pointer-events: none;
+}
+
+.polaroid__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 35%;
+    filter: saturate(0.84) contrast(1.015);
+}
+
+.polaroid figcaption {
+    min-height: 1em;
+    padding: clamp(0.45rem, min(0.78vw, 1.3vh), 0.85rem) 0 0.05em;
+    font-family: "Pinyon Script", "Segoe Script", cursive;
+    font-size: clamp(2.2rem, min(3.8vw, 7.1vh), 4.45rem);
+    font-weight: 400;
+    line-height: 0.86;
+    text-align: center;
+}
+
+.polaroid__tape {
+    position: absolute;
+    z-index: 2;
+    top: clamp(-1.25rem, -1.75vw, -0.7rem);
+    left: 50%;
+    width: clamp(5.2rem, min(9.5vw, 17vh), 10.75rem);
+    height: clamp(2rem, min(3.6vw, 6.5vh), 4rem);
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 4px),
+        rgba(220, 207, 179, 0.9);
+    box-shadow: 0 0.2rem 0.55rem rgba(0, 0, 0, 0.16);
+    opacity: 0.95;
+    transform: translateX(-50%) rotate(3.5deg);
+}
+
+.hero__paper {
+    position: absolute;
+    z-index: 4;
+    bottom: -1px;
+    left: 0;
+    width: 40%;
+    height: 17%;
+    border-radius: 0 0.5rem 0 0;
+    background: #ffffff;
+    clip-path: polygon(0 0, 6% 0, 18% 64%, 94% 64%, 100% 100%, 0 100%);
+    filter: drop-shadow(0 -0.2rem 0.2rem rgba(0, 0, 0, 0.08));
+}
+
+.hero__page-number {
+    position: absolute;
+    z-index: 9;
+    right: clamp(0.85rem, 1.55vw, 1.9rem);
+    bottom: clamp(0.65rem, 1.8vh, 1.35rem);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: clamp(0.5rem, 0.6vw, 0.72rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.js .hero__meta,
+.js .hero__copy,
+.js .polaroid,
+.js .hero__paper,
+.js .hero__page-number {
+    opacity: 0;
+    animation: reveal 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.js .hero__meta {
+    animation-delay: 80ms;
+}
+
+.js .hero__copy {
+    animation-delay: 150ms;
+}
+
+.js .polaroid {
+    animation-name: reveal-polaroid;
+    animation-delay: 240ms;
+}
+
+.js .hero__paper,
+.js .hero__page-number {
+    animation-delay: 320ms;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(0.65rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes reveal-polaroid {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--pointer-x), calc(var(--pointer-y) + 1rem), 0) rotate(-4deg);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(var(--pointer-x), var(--pointer-y), 0) rotate(-2.35deg);
+    }
+}
+
+@media (max-aspect-ratio: 4 / 3) {
+    .hero {
+        min-height: max(100svh, 46rem);
+    }
+
+    .hero__background {
+        background-position: 56% center;
+    }
+
+    .hero__shade {
+        background:
+            linear-gradient(180deg, rgba(8, 9, 8, 0.8) 0%, rgba(8, 9, 8, 0.18) 45%, rgba(8, 9, 8, 0.32) 100%),
+            linear-gradient(90deg, rgba(8, 9, 8, 0.45), transparent 80%);
+    }
+
+    .hero__copy {
+        top: 12.5%;
+        width: calc(100% - 1.7rem);
+    }
+
+    .hero__title {
+        font-size: clamp(4.5rem, 17.5vw, 8.8rem);
+    }
+
+    .hero__role {
+        margin-top: 1.15rem;
+        font-size: clamp(0.58rem, 1.55vw, 0.78rem);
+    }
+
+    .polaroid {
+        right: -2.5vw;
+        bottom: 7.5%;
+        width: min(72vw, 33rem);
+    }
+
+    .polaroid figcaption {
+        font-size: clamp(2.45rem, 8vw, 4rem);
+    }
+
+    .hero__paper {
+        width: 70%;
+        height: 11%;
+    }
+}
+
+@media (max-width: 40rem) {
+    .hero__meta {
+        grid-template-columns: 1fr auto;
+    }
+
+    .hero__meta p:nth-child(2) {
+        display: none;
+    }
+
+    .hero__title {
+        font-size: clamp(4.2rem, 21vw, 7rem);
+    }
+
+    .polaroid {
+        right: -6vw;
+        width: min(82vw, 28rem);
+    }
+
+    .hero__paper {
+        width: 79%;
+    }
+}
+
+@media (max-height: 34rem) and (min-aspect-ratio: 4 / 3) {
+    .hero__copy {
+        top: 24%;
+    }
+
+    .hero__title {
+        font-size: min(8vw, 16vh);
+    }
+
+    .polaroid {
+        bottom: 2.5vh;
+        width: min(35vw, 64vh);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 1ms !important;
+    }
+}
+
+/*
+ * Desktop coordinates mirror Canva page 1 (1920 x 1080). Keeping these as
+ * viewport proportions preserves the original layer placement at 16:9 while
+ * the rules above remain the responsive fallback for narrower screens.
+ */
+@media (min-aspect-ratio: 4 / 3) {
+    .hero__meta {
+        top: 2.6877vh;
+        right: 1.8677vw;
+        left: 1.8677vw;
+    }
+
+    .hero__copy {
+        inset: 0;
+        width: 100%;
+    }
+
+    .hero__title {
+        position: static;
+        font-size: 8.55vw;
+        line-height: 1;
+    }
+
+    .hero__title span {
+        position: absolute;
+    }
+
+    .hero__title span:first-child {
+        top: 22.7935vh;
+        left: 1.8677vw;
+    }
+
+    .hero__title span:last-child {
+        top: 41.4362vh;
+        left: 13.9424vw;
+        margin-left: 0;
+    }
+
+    .hero__role {
+        position: absolute;
+        top: 64.1818vh;
+        left: 8.3907vw;
+        margin: 0;
+    }
+
+    .polaroid {
+        top: 15.3vh;
+        right: auto;
+        bottom: auto;
+        left: 52.5543vw;
+        width: 38.197vw;
+        max-width: none;
+        padding: 6.4% 6.65% 2.7% 5.2%;
+    }
+
+    .polaroid__photo {
+        aspect-ratio: 646.703 / 765.523;
+    }
+
+    .polaroid figcaption {
+        padding-top: 1.25vw;
+        font-size: 3.35vw;
+    }
+
+    .polaroid__tape {
+        top: -0.2%;
+        width: 28.33%;
+        height: auto;
+        aspect-ratio: 207.727 / 79.585;
+    }
+
+    .hero__page-number {
+        right: 1.8677vw;
+        bottom: 4.79vh;
+    }
+}

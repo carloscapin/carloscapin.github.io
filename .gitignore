@@ -1,0 +1,38 @@
+# Editors and local agent settings
+.vscode/
+.idea/
+.vs/
+.codex/
+.agents/
+
+# Dependencies and generated output
+node_modules/
+dist/
+coverage/
+.cache/
+tmp/
+temp/
+*.log
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+credentials*.json
+service-account*.json
+secrets/
+.clasp.json
+
+# Design source and working files that are not part of the website
+design-reference/
+*.ai
+*.psd
+*.zip
+SECURITY.md
+security/
+.security/
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

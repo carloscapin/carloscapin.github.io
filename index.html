@@ -1,7 +1,62 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Carlos Miguel C. Capin | visual artist and marketing creative portfolio.">
+    <meta name="theme-color" content="#11120f">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; upgrade-insecure-requests">
+
+    <title>Carlos Capin | Artist Portfolio</title>
+
+    <script src="static/js/head.js"></script>
+    <link rel="preload" href="static/fonts/bodoni-moda-regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="static/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="static/fonts/pinyon-script-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="static/media/images/landing/gallery-background.png" as="image">
+    <link rel="preload" href="static/media/images/landing/carlos-capin-portrait.png" as="image">
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+
 <body>
-Jirog Supot
-jerog
+    <a class="skip-link" href="#landing">Skip to portfolio</a>
 
+    <main class="hero" id="landing" aria-labelledby="portfolio-title">
+        <div class="hero__background" aria-hidden="true">
+            <span class="hero__shade"></span>
+            <span class="hero__grain"></span>
+        </div>
 
-  
+        <header class="hero__meta" aria-label="Portfolio details">
+            <p>Visual Artist</p>
+            <p>Creative Works &amp; Visual Journey</p>
+            <p>2026</p>
+        </header>
+
+        <section class="hero__copy" aria-label="Portfolio introduction">
+            <h1 class="hero__title" id="portfolio-title">
+                <span>Graphic</span>
+                <span>Artist</span>
+            </h1>
+            <p class="hero__role">Marketing Management</p>
+        </section>
+
+        <figure class="polaroid" aria-label="Carlos Capin artist portfolio portrait">
+            <span class="polaroid__tape" aria-hidden="true"></span>
+            <div class="polaroid__photo">
+                <img src="static/media/images/landing/carlos-capin-portrait.png"
+                    alt="Carlos Capin wearing a cream embroidered barong"
+                    width="1408" height="1760">
+            </div>
+            <figcaption>Artist Portfolio</figcaption>
+        </figure>
+
+        <span class="hero__paper" aria-hidden="true"></span>
+        <p class="hero__page-number" aria-label="Page 1">(01)</p>
+    </main>
+
+    <script src="static/js/main.js" defer></script>
 </body>
+</html>
