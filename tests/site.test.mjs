@@ -42,6 +42,13 @@ test("page 1 is composed from independently positioned layers", () => {
     assert.match(css, /left:\s*52\.5543%/);
 });
 
+test("portfolio fills the complete browser viewport without an outer border", () => {
+    assert.match(css, /\.landing\s*\{[\s\S]*?padding:\s*0;/);
+    assert.match(css, /\.portfolio-canvas\s*\{[\s\S]*?width:\s*100vw;/);
+    assert.match(css, /\.portfolio-canvas\s*\{[\s\S]*?height:\s*100svh;/);
+    assert.doesNotMatch(css, /background:\s*#f1f3f4/);
+});
+
 test("all Canva-derived media and fonts are local", () => {
     for (const resource of landingAssets) {
         assert.match(html, new RegExp(resource.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
