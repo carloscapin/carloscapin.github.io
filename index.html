@@ -3,36 +3,67 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Carlos Miguel C. Capin | graphic artist and marketing creative portfolio.">
+    <meta name="description" content="Carlos Miguel C. Capin — visual artist, graphic artist, and marketing creative portfolio.">
     <meta name="theme-color" content="#11120f">
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; form-action 'none'; img-src 'self' data:; style-src 'self'; script-src 'none'; object-src 'none'; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; form-action 'none'; img-src 'self' data:; font-src 'self'; style-src 'self'; script-src 'none'; object-src 'none'; upgrade-insecure-requests">
 
     <title>Carlos Capin | Artist Portfolio</title>
 
+    <link rel="preload" href="static/media/fonts/bodoni-moda-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="static/media/images/landing/canva-page-01.png" as="image" type="image/png">
     <link rel="stylesheet" href="static/css/main.css">
 </head>
 
 <body>
-    <main class="landing" id="landing" aria-labelledby="portfolio-title">
-        <h1 class="sr-only" id="portfolio-title">Carlos Capin Graphic Artist Portfolio</h1>
+    <main class="landing" aria-labelledby="portfolio-title">
+        <article class="portfolio-canvas" aria-label="Carlos Capin artist portfolio cover">
+            <h1 class="sr-only" id="portfolio-title">Carlos Capin Graphic Artist Portfolio</h1>
 
-        <img class="landing__artwork"
-            src="static/media/images/landing/canva-page-01.png"
-            alt="Carlos Capin graphic artist portfolio cover. Visual Artist, Creative Works and Visual Journey, Marketing Management, 2026."
-            width="600" height="337">
+            <img class="layer layer--page-background"
+                src="static/media/images/landing/elements/gallery-exhibit-background.jpg"
+                alt="" aria-hidden="true">
 
-        <div class="sr-only" aria-label="Portfolio cover text">
-            <p>Visual Artist</p>
-            <p>Creative Works &amp; Visual Journey</p>
-            <p>Graphic Artist</p>
-            <p>Marketing Management</p>
-            <p>2026</p>
-            <p>Artist Portfolio</p>
-            <p>Page 1</p>
-        </div>
+            <img class="layer layer--folder-top"
+                src="static/media/images/landing/elements/purple-folder.png"
+                alt="" aria-hidden="true">
+
+            <img class="layer layer--gallery"
+                src="static/media/images/landing/elements/framed-art-gallery.jpg"
+                alt="" aria-hidden="true">
+
+            <div class="layer layer--left-shade" aria-hidden="true"></div>
+
+            <img class="layer layer--folder-bottom"
+                src="static/media/images/landing/elements/purple-folder.png"
+                alt="" aria-hidden="true">
+
+            <div class="layer portrait-window" role="img" aria-label="Portrait of Carlos Capin">
+                <img class="portrait-source"
+                    src="static/media/images/landing/canva-page-01.png"
+                    alt="">
+            </div>
+
+            <img class="layer layer--polaroid"
+                src="static/media/images/landing/elements/polaroid-frame.png"
+                alt="" aria-hidden="true">
+
+            <img class="layer layer--tape"
+                src="static/media/images/landing/elements/paper-tape.png"
+                alt="" aria-hidden="true">
+
+            <p class="copy copy--eyebrow copy--visual-artist">Visual Artist</p>
+            <p class="copy copy--eyebrow copy--journey">Creative Works &amp; Visual Journey</p>
+            <p class="copy copy--eyebrow copy--year">2026</p>
+
+            <p class="copy copy--display copy--graphic">Graphic</p>
+            <p class="copy copy--display copy--artist">Artist</p>
+            <p class="copy copy--marketing">Marketing Management</p>
+
+            <p class="copy copy--signature">Artist Portfolio</p>
+            <p class="copy copy--page-number" aria-label="Page 1">(01)</p>
+        </article>
     </main>
 </body>
 </html>

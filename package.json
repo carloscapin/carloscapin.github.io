@@ -4,5 +4,10 @@
   "private": true,
   "scripts": {
     "test": "node --test"
+  },
+  "devDependencies": {
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/caveat": "^5.3.0"
   }
 }

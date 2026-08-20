@@ -1,20 +1,24 @@
 # Carlos Capin Portfolio
 
-Static portfolio website based on Carlos Capin's Canva presentation. The current implementation uses the exact page 1 render downloaded through the Canva integration, preserving the original face, typography, spacing, imagery, and composition.
+Static GitHub Pages portfolio based on page 1 of Carlos Capin's Canva presentation. The landing cover is rebuilt as responsive HTML/CSS layers instead of being displayed as one flattened page image.
 
 ## Structure
 
 ```text
 .
 |-- index.html
-|-- pages/                         # Additional portfolio pages
+|-- pages/                              # Additional portfolio pages
 |-- static/
-|   |-- css/                       # Local styles
-|   `-- media/images/landing/      # Canva landing-page render
-`-- tests/                         # Static integrity checks
+|   |-- css/                            # Local styles
+|   `-- media/
+|       |-- fonts/                      # Locally served fonts
+|       `-- images/landing/
+|           |-- elements/               # Separate Canva visual layers
+|           `-- canva-page-01.png       # Exact portrait source/reference
+`-- tests/                              # Static integrity checks
 ```
 
-All runtime assets are local. The page does not load CSS, JavaScript, fonts, or frameworks from a CDN.
+Every runtime resource is local. The published site does not require Canva, a CDN, a JavaScript framework, or a build server.
 
 ## Local preview
 
