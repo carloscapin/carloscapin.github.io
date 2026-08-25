@@ -403,6 +403,53 @@ img {
   filter: blur(0.75rem);
 }
 
+.portrait-card.is-portrait-loading {
+  aspect-ratio: 1150 / 1368;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.portrait-card.is-portrait-loading .portrait-card__swing {
+  position: absolute;
+  inset: 0;
+  display: block;
+  animation: none;
+  transform: none;
+}
+
+.portrait-card.is-portrait-loading .portrait-card__media,
+.portrait-card.is-portrait-loading.is-drive-framed .portrait-card__media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38%;
+  height: auto;
+  aspect-ratio: 1;
+  overflow: visible;
+  translate: -50% -50%;
+  rotate: 0deg;
+  background: transparent;
+  box-shadow: none;
+}
+
+.portrait-card.is-portrait-loading .portrait-card__placeholder {
+  overflow: visible;
+  background: transparent;
+}
+
+.portrait-card.is-portrait-loading .portrait-card__placeholder::after {
+  width: 100%;
+}
+
+.portrait-card.is-portrait-loading .portrait-card__tape,
+.portrait-card.is-portrait-loading .portrait-card__frame,
+.portrait-card.is-portrait-loading .portrait-card__drive-tape,
+.portrait-card.is-portrait-loading figcaption {
+  display: none !important;
+}
+
 .portrait-card figcaption {
   display: grid;
   min-height: clamp(4.6rem, 6.8vw, 6.6rem);

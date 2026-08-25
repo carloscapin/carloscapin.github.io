@@ -10,6 +10,7 @@ test("fresh Carlos landing contains the reference hierarchy and identity", async
   assert.match(html, /Graphic[\s\S]*Artist/i);
   assert.match(html, /Marketing Management/i);
   assert.doesNotMatch(html, /Jerome|Jirog/i);
+  assert.match(html, /class="portrait-card is-portrait-loading"/);
   assert.match(html, /class="portrait-card__placeholder"[^>]*><\/div>/);
   assert.doesNotMatch(html, /carlos-portrait-placeholder\.svg/);
 });
@@ -98,7 +99,10 @@ test("Drive catalog is limited to automatic hero media", async () => {
   assert.match(app, /belongsTo\(item, "landing", "tape"\)/);
   assert.match(app, /aspectRatio >= 1\.6 \? "tape" : aspectRatio <= 1\.35 \? "frame"/);
   assert.match(css, /\.portrait-card__placeholder::after\s*\{[\s\S]*border-radius:\s*50%[\s\S]*radial-gradient/);
-  assert.match(app, /elements\.portrait\.hidden = true;\s*elements\.portraitPlaceholder\.hidden = false;[\s\S]*elements\.portrait\.onload/);
+  assert.match(css, /\.portrait-card\.is-portrait-loading\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/);
+  assert.match(css, /\.portrait-card\.is-portrait-loading \.portrait-card__frame,[\s\S]*\.portrait-card\.is-portrait-loading figcaption\s*\{\s*display:\s*none !important/);
+  assert.match(app, /elements\.portrait\.hidden = true;\s*elements\.portraitPlaceholder\.hidden = false;\s*elements\.portraitCard\.classList\.add\("is-portrait-loading"\);[\s\S]*elements\.portrait\.onload/);
+  assert.match(app, /elements\.portraitPlaceholder\.hidden = true;\s*elements\.portraitCard\.classList\.remove\("is-portrait-loading"\)/);
   assert.match(app, /setInterval\(loadDriveCatalog/);
   assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });

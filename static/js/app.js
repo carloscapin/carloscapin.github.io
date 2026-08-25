@@ -191,6 +191,7 @@
     elements.portrait.hidden = true;
     elements.portrait.removeAttribute("src");
     elements.portraitPlaceholder.hidden = false;
+    elements.portraitCard.classList.add("is-portrait-loading");
   }
 
   function clearPortraitDecoration(element, stateClass) {
@@ -256,9 +257,11 @@
     if (portrait) {
       elements.portrait.hidden = true;
       elements.portraitPlaceholder.hidden = false;
+      elements.portraitCard.classList.add("is-portrait-loading");
       elements.portrait.onload = () => {
         elements.portrait.hidden = false;
         elements.portraitPlaceholder.hidden = true;
+        elements.portraitCard.classList.remove("is-portrait-loading");
       };
       elements.portrait.onerror = clearPortrait;
       elements.portrait.src = driveThumbnail(portrait, "w1400");
