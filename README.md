@@ -2,8 +2,6 @@
 
 A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive.
 
-The navigation follows a two-tier office dashboard reference: slanted section tabs plus utility icons on the first row, then three portfolio metadata blocks and a search field on the second row. The complete navigation becomes an accessible right-side drawer on narrow or portrait screens. `Home` is the only active file while the remaining sections are still being designed.
-
 ## Media folders
 
 `setupCarlosPortfolio()` has already created this structure inside the supplied Drive folder:

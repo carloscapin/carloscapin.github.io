@@ -6,13 +6,7 @@
     background: document.querySelector("#hero-background"),
     portrait: document.querySelector("#hero-portrait"),
     portraitPlaceholder: document.querySelector("#portrait-placeholder"),
-    navPanel: document.querySelector("#portfolio-nav-panel"),
-    navToggle: document.querySelector("#portfolio-nav-toggle"),
-    navClose: document.querySelector("#portfolio-nav-close"),
-    navBackdrop: document.querySelector("#portfolio-nav-backdrop"),
-    navHome: document.querySelector(".file-tab--active"),
   };
-  const compactNavigation = window.matchMedia("(max-width: 900px), (orientation: portrait)");
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
   const slug = (value = "") =>
@@ -51,45 +45,6 @@
     document.querySelectorAll("[data-current-year]").forEach((element) => {
       element.textContent = currentYear;
     });
-  }
-
-  function setNavigationOpen(open, restoreFocus = false) {
-    const shouldOpen = Boolean(open && compactNavigation.matches);
-    elements.navPanel.classList.toggle("is-open", shouldOpen);
-    elements.navBackdrop.classList.toggle("is-open", shouldOpen);
-    elements.navToggle.setAttribute("aria-expanded", String(shouldOpen));
-    elements.navBackdrop.setAttribute("aria-hidden", String(!shouldOpen));
-    document.body.classList.toggle("nav-open", shouldOpen);
-
-    if (compactNavigation.matches) {
-      elements.navPanel.inert = !shouldOpen;
-      elements.navPanel.setAttribute("aria-hidden", String(!shouldOpen));
-    } else {
-      elements.navPanel.inert = false;
-      elements.navPanel.removeAttribute("aria-hidden");
-    }
-
-    if (shouldOpen) {
-      window.requestAnimationFrame(() => elements.navClose.focus());
-    } else if (restoreFocus && compactNavigation.matches) {
-      elements.navToggle.focus();
-    }
-  }
-
-  function bindNavigation() {
-    elements.navToggle.addEventListener("click", () => {
-      setNavigationOpen(!elements.navPanel.classList.contains("is-open"));
-    });
-    elements.navClose.addEventListener("click", () => setNavigationOpen(false, true));
-    elements.navBackdrop.addEventListener("click", () => setNavigationOpen(false, true));
-    elements.navHome.addEventListener("click", () => setNavigationOpen(false));
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && elements.navPanel.classList.contains("is-open")) {
-        setNavigationOpen(false, true);
-      }
-    });
-    compactNavigation.addEventListener("change", () => setNavigationOpen(false));
-    setNavigationOpen(false);
   }
 
   function clearBackground() {
@@ -180,7 +135,6 @@
   }
 
   setCurrentYear();
-  bindNavigation();
   loadDriveCatalog();
 
   if (Number(config.refreshEveryMs) > 0) {

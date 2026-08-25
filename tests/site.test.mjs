@@ -35,26 +35,6 @@ test("the first release renders only one hero section", async () => {
   assert.doesNotMatch(html, /<dialog\b|<footer\b|href="#work"/);
 });
 
-test("portfolio navigation uses office file tabs and a compact sidebar", async () => {
-  const [html, css, app] = await Promise.all([
-    read("index.html"),
-    read("static/css/main.css"),
-    read("static/js/app.js"),
-  ]);
-  assert.match(html, /class="portfolio-nav"/);
-  assert.equal((html.match(/class="file-tab\b/g) || []).length, 6);
-  assert.match(html, /file-tab--active[\s\S]*Home/);
-  assert.match(html, /portfolio-nav__details/);
-  assert.match(html, /placeholder="Search portfolio\.\.\."/);
-  assert.match(html, /aria-controls="portfolio-nav-panel"/);
-  assert.match(css, /clip-path:\s*polygon/);
-  assert.match(css, /@media \(max-width: 900px\), \(orientation: portrait\)/);
-  assert.match(css, /\.portfolio-nav__drawer\.is-open/);
-  assert.match(app, /aria-expanded/);
-  assert.match(app, /event\.key === "Escape"/);
-  assert.match(app, /navPanel\.inert/);
-});
-
 test("Drive catalog is limited to automatic hero media", async () => {
   const app = await read("static/js/app.js");
   assert.match(app, /belongsTo\(item, "landing", "background"\)/);

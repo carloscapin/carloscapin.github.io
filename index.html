@@ -18,81 +18,11 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="portfolio-header">
-      <nav class="portfolio-nav" aria-label="Portfolio files">
-        <a class="portfolio-nav__mobile-identity" href="#home" aria-label="Carlos Capin portfolio cover">
-          <span class="portfolio-nav__monogram" aria-hidden="true">CC</span>
-          <span>
-            <strong>Carlos Capin</strong>
-            <small>Visual portfolio</small>
-          </span>
-        </a>
-
-        <div class="portfolio-nav__drawer" id="portfolio-nav-panel">
-          <div class="portfolio-nav__drawer-head">
-            <p><span>Portfolio index</span><strong>Files 01—06</strong></p>
-            <button class="portfolio-nav__close" id="portfolio-nav-close" type="button" aria-label="Close portfolio index">×</button>
-          </div>
-
-          <div class="portfolio-nav__top-row">
-            <div class="portfolio-nav__tabs">
-              <a class="file-tab file-tab--active" href="#home" aria-current="page">Home</a>
-              <span class="file-tab file-tab--about" aria-disabled="true">About</span>
-              <span class="file-tab file-tab--work" aria-disabled="true">Portfolio</span>
-              <span class="file-tab file-tab--services" aria-disabled="true">Services</span>
-              <span class="file-tab file-tab--experience" aria-disabled="true">Experience</span>
-              <span class="file-tab file-tab--contact" aria-disabled="true">Contact</span>
-            </div>
-
-            <div class="portfolio-nav__tools" aria-hidden="true">
-              <span class="portfolio-nav__tool">
-                <svg viewBox="0 0 24 24"><path d="M3 5.5h18v13H3zM3.5 6l8.5 7 8.5-7"/></svg>
-              </span>
-              <span class="portfolio-nav__tool">
-                <svg viewBox="0 0 24 24"><path d="M7 9V6.5a5 5 0 0 1 10 0V9M5 9h14v11H5zM12 13v4"/></svg>
-              </span>
-              <span class="portfolio-nav__tool">
-                <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17.5" cy="9" r="2.5"/><path d="M2.5 20c.4-4.2 2.6-6.3 6.5-6.3s6.1 2.1 6.5 6.3M14 14.2c4.4-.7 6.9 1.2 7.5 5.8"/></svg>
-              </span>
-            </div>
-          </div>
-
-          <div class="portfolio-nav__details">
-            <div class="portfolio-nav__detail">
-              <span class="portfolio-nav__detail-grip" aria-hidden="true"></span>
-              <p><strong>Graphic Artist</strong><small>Visual identity &amp; creative direction</small></p>
-            </div>
-            <div class="portfolio-nav__detail">
-              <span class="portfolio-nav__detail-grip" aria-hidden="true"></span>
-              <p><strong>Marketing Management</strong><small>Strategy-backed visual communication</small></p>
-            </div>
-            <div class="portfolio-nav__detail">
-              <span class="portfolio-nav__detail-grip" aria-hidden="true"></span>
-              <p><strong>Carlos Capin</strong><small>Portfolio archive · <span data-current-year>2026</span></small></p>
-            </div>
-
-            <label class="portfolio-nav__search">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-              <input type="search" aria-label="Search portfolio" placeholder="Search portfolio..." disabled>
-              <span aria-hidden="true">×</span>
-            </label>
-          </div>
-        </div>
-
-        <button
-          class="portfolio-nav__menu"
-          id="portfolio-nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="portfolio-nav-panel"
-        >
-          <span class="portfolio-nav__menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span>Index</span>
-        </button>
-      </nav>
+    <header class="masthead" aria-label="Portfolio heading">
+      <p class="masthead__brand">Visual artist</p>
+      <p class="masthead__statement">Creative works &amp; visual journey</p>
+      <p class="masthead__year" data-current-year>2026</p>
     </header>
-
-    <button class="portfolio-nav__backdrop" id="portfolio-nav-backdrop" type="button" aria-label="Close portfolio index" tabindex="-1"></button>
 
     <main id="main-content">
       <section class="hero" id="home" aria-labelledby="hero-title">
