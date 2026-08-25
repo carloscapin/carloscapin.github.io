@@ -61,6 +61,59 @@
       </section>
     </main>
 
+    <nav class="icon-dock" id="icon-dock" aria-label="Portfolio navigation">
+      <div class="icon-dock__items">
+        <button class="icon-dock__item" type="button" data-dock-view="Home" aria-label="Home" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10.5 8.5-7 8.5 7M5.5 9v11h13V9M9.5 20v-6h5v6"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="icon-dock__item" type="button" data-dock-view="About" aria-label="About" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M5.5 21c.4-5.1 2.6-7.7 6.5-7.7s6.1 2.6 6.5 7.7"/></svg>
+          <span>About</span>
+        </button>
+        <button class="icon-dock__item" type="button" data-dock-view="Work" aria-label="Selected work" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>
+          <span>Work</span>
+        </button>
+        <button class="icon-dock__item" type="button" data-dock-view="Skills" aria-label="Skills and services" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 20-7.6-7.2a5.1 5.1 0 0 1 7.2-7.2l.4.4.4-.4a5.1 5.1 0 0 1 7.2 7.2ZM8.3 9.1l2.2 2.1 4.2-4"/></svg>
+          <span>Skills</span>
+        </button>
+        <button class="icon-dock__item" type="button" data-dock-view="Experience" aria-label="Experience" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4zM9 8V5h6v3M4 12h16M10 12v2h4v-2"/></svg>
+          <span>Experience</span>
+        </button>
+        <button class="icon-dock__item" type="button" data-dock-view="Contact" aria-label="Contact" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v11H11l-5 3v-3H4z"/></svg>
+          <span>Contact</span>
+        </button>
+      </div>
+
+      <button
+        class="icon-dock__minimize"
+        id="icon-dock-minimize"
+        type="button"
+        aria-label="Minimize portfolio navigation"
+        aria-controls="icon-dock"
+        aria-expanded="true"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8v10h10M6.5 17.5 18 6"/><path d="M12 6h6v6"/></svg>
+      </button>
+    </nav>
+
+    <button
+      class="icon-dock__restore"
+      id="icon-dock-restore"
+      type="button"
+      aria-label="Expand portfolio navigation"
+      aria-controls="icon-dock"
+      aria-expanded="false"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 12h14M5 16h14"/></svg>
+    </button>
+    <p class="visually-hidden" id="icon-dock-status" aria-live="polite">Home selected</p>
+
     <noscript>
       <p class="noscript-note">Please enable JavaScript to load Carlos&rsquo; Drive-powered hero media.</p>
     </noscript>

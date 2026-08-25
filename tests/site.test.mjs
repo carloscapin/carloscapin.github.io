@@ -35,6 +35,24 @@ test("the first release renders only one hero section", async () => {
   assert.doesNotMatch(html, /<dialog\b|<footer\b|href="#work"/);
 });
 
+test("bottom icon dock changes icon color and supports a shaking minimized state", async () => {
+  const [html, css, app] = await Promise.all([
+    read("index.html"),
+    read("static/css/main.css"),
+    read("static/js/app.js"),
+  ]);
+  assert.equal((html.match(/class="icon-dock__item"/g) || []).length, 6);
+  assert.match(html, /id="icon-dock-minimize"/);
+  assert.match(html, /id="icon-dock-restore"/);
+  assert.match(css, /\.icon-dock\s*\{[\s\S]*position:\s*fixed[\s\S]*bottom:/);
+  assert.match(css, /\.icon-dock__item\s*\{[\s\S]*background:\s*transparent/);
+  assert.match(css, /\.icon-dock__item\[aria-pressed="true"\][\s\S]*color:\s*var\(--acid\)/);
+  assert.match(css, /@keyframes dock-shake/);
+  assert.match(css, /\.icon-dock__restore\.is-visible[\s\S]*animation:\s*dock-shake/);
+  assert.match(app, /setDockMinimized/);
+  assert.match(app, /setAttribute\("aria-pressed"/);
+});
+
 test("Drive catalog is limited to automatic hero media", async () => {
   const app = await read("static/js/app.js");
   assert.match(app, /belongsTo\(item, "landing", "background"\)/);

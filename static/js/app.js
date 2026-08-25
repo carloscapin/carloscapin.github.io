@@ -6,6 +6,11 @@
     background: document.querySelector("#hero-background"),
     portrait: document.querySelector("#hero-portrait"),
     portraitPlaceholder: document.querySelector("#portrait-placeholder"),
+    dock: document.querySelector("#icon-dock"),
+    dockItems: [...document.querySelectorAll(".icon-dock__item")],
+    dockMinimize: document.querySelector("#icon-dock-minimize"),
+    dockRestore: document.querySelector("#icon-dock-restore"),
+    dockStatus: document.querySelector("#icon-dock-status"),
   };
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
@@ -45,6 +50,48 @@
     document.querySelectorAll("[data-current-year]").forEach((element) => {
       element.textContent = currentYear;
     });
+  }
+
+  function selectDockItem(selectedItem) {
+    elements.dockItems.forEach((item) => {
+      item.setAttribute("aria-pressed", String(item === selectedItem));
+    });
+
+    const selectedView = selectedItem.dataset.dockView || selectedItem.getAttribute("aria-label");
+    elements.dockStatus.textContent = `${selectedView} selected`;
+
+    if (selectedView === "Home") {
+      document.querySelector("#home")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function setDockMinimized(minimized, moveFocus = true) {
+    elements.dock.classList.toggle("is-minimized", minimized);
+    elements.dock.inert = minimized;
+    elements.dock.setAttribute("aria-hidden", String(minimized));
+    elements.dockMinimize.setAttribute("aria-expanded", String(!minimized));
+    elements.dockRestore.classList.toggle("is-visible", minimized);
+    elements.dockRestore.setAttribute("aria-expanded", String(minimized));
+    elements.dockRestore.setAttribute("aria-hidden", String(!minimized));
+
+    if (!moveFocus) return;
+
+    window.requestAnimationFrame(() => {
+      if (minimized) {
+        elements.dockRestore.focus();
+      } else {
+        elements.dockItems.find((item) => item.getAttribute("aria-pressed") === "true")?.focus();
+      }
+    });
+  }
+
+  function bindIconDock() {
+    elements.dockItems.forEach((item) => {
+      item.addEventListener("click", () => selectDockItem(item));
+    });
+    elements.dockMinimize.addEventListener("click", () => setDockMinimized(true));
+    elements.dockRestore.addEventListener("click", () => setDockMinimized(false));
+    setDockMinimized(false, false);
   }
 
   function clearBackground() {
@@ -135,6 +182,7 @@
   }
 
   setCurrentYear();
+  bindIconDock();
   loadDriveCatalog();
 
   if (Number(config.refreshEveryMs) > 0) {

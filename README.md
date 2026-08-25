@@ -2,6 +2,8 @@
 
 A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive.
 
+A fixed lower-center icon dock previews the future portfolio navigation. Its six transparent buttons change icon color only on hover or selection. The dock can be minimized into a compact square restore control with a gentle periodic shake.
+
 ## Media folders
 
 `setupCarlosPortfolio()` has already created this structure inside the supplied Drive folder:

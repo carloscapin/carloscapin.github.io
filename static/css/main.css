@@ -339,6 +339,219 @@ img {
   font-weight: 700;
 }
 
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+.icon-dock {
+  position: fixed;
+  z-index: 40;
+  bottom: clamp(1.1rem, 2.7vh, 2rem);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  padding: 0.48rem 0.9rem;
+  border: 1px solid rgba(240, 238, 229, 0.12);
+  border-radius: 999px;
+  background: rgba(25, 30, 28, 0.9);
+  box-shadow: 0 1rem 2.8rem rgba(0, 0, 0, 0.42), 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  opacity: 1;
+  translate: -50% 0;
+  scale: 1;
+  visibility: visible;
+  backdrop-filter: blur(16px);
+  transition: opacity 180ms ease, scale 220ms ease, translate 220ms ease, visibility 0s;
+}
+
+.icon-dock.is-minimized {
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% 0.8rem;
+  scale: 0.82;
+  visibility: hidden;
+  transition: opacity 160ms ease, scale 180ms ease, translate 180ms ease, visibility 0s linear 180ms;
+}
+
+.icon-dock__items {
+  display: flex;
+  align-items: center;
+}
+
+.icon-dock__item {
+  position: relative;
+  display: grid;
+  width: clamp(2.55rem, 3.2vw, 3rem);
+  height: clamp(2.55rem, 3.2vw, 3rem);
+  border: 0;
+  border-radius: 0;
+  outline-offset: -0.15rem;
+  background: transparent;
+  color: rgba(240, 238, 229, 0.62);
+  cursor: pointer;
+  place-items: center;
+  transition: color 170ms ease;
+}
+
+.icon-dock__item + .icon-dock__item::before {
+  position: absolute;
+  top: 28%;
+  bottom: 28%;
+  left: 0;
+  width: 1px;
+  background: rgba(240, 238, 229, 0.14);
+  content: "";
+}
+
+.icon-dock__item:hover,
+.icon-dock__item:focus-visible {
+  background: transparent;
+  color: #fff8d8;
+}
+
+.icon-dock__item[aria-pressed="true"] {
+  background: transparent;
+  color: var(--acid);
+}
+
+.icon-dock__item:focus-visible {
+  outline: 1px solid currentColor;
+}
+
+.icon-dock__item svg,
+.icon-dock__minimize svg,
+.icon-dock__restore svg {
+  width: clamp(1.2rem, 1.7vw, 1.55rem);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.icon-dock__item svg {
+  transition: scale 170ms ease;
+}
+
+.icon-dock__item:hover svg,
+.icon-dock__item:focus-visible svg,
+.icon-dock__item[aria-pressed="true"] svg {
+  scale: 1.09;
+}
+
+.icon-dock__item > span {
+  position: absolute;
+  bottom: calc(100% + 0.72rem);
+  left: 50%;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid rgba(240, 238, 229, 0.12);
+  border-radius: 0.35rem;
+  background: rgba(17, 19, 16, 0.94);
+  color: var(--paper);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  translate: -50% 0.35rem;
+  transition: opacity 150ms ease, translate 150ms ease;
+  white-space: nowrap;
+}
+
+.icon-dock__item:hover > span,
+.icon-dock__item:focus-visible > span {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+.icon-dock__minimize {
+  position: absolute;
+  top: -0.7rem;
+  right: -0.55rem;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--acid);
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.34);
+  color: var(--ink);
+  cursor: pointer;
+  place-items: center;
+  transition: color 160ms ease, scale 160ms ease;
+}
+
+.icon-dock__minimize:hover,
+.icon-dock__minimize:focus-visible {
+  color: #59621f;
+  scale: 1.08;
+}
+
+.icon-dock__minimize:focus-visible,
+.icon-dock__restore:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 0.18rem;
+}
+
+.icon-dock__minimize svg {
+  width: 1rem;
+}
+
+.icon-dock__restore {
+  position: fixed;
+  z-index: 40;
+  bottom: clamp(1.1rem, 2.7vh, 2rem);
+  left: 50%;
+  display: grid;
+  width: 3.4rem;
+  height: 3.4rem;
+  padding: 0;
+  border: 1px solid rgba(240, 238, 229, 0.13);
+  border-radius: 0.55rem;
+  background: rgba(25, 30, 28, 0.94);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  color: var(--acid);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  place-items: center;
+  translate: -50% 0.8rem;
+  scale: 0.82;
+  visibility: hidden;
+  transition: color 160ms ease, opacity 170ms ease, scale 200ms ease, translate 200ms ease, visibility 0s linear 200ms;
+}
+
+.icon-dock__restore.is-visible {
+  animation: dock-shake 4.2s ease-in-out 900ms infinite;
+  opacity: 1;
+  pointer-events: auto;
+  translate: -50% 0;
+  scale: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.icon-dock__restore:hover,
+.icon-dock__restore:focus-visible {
+  color: #fff8d8;
+}
+
+@keyframes dock-shake {
+  0%, 76%, 100% { transform: rotate(0deg); }
+  80% { transform: rotate(-6deg); }
+  84% { transform: rotate(6deg); }
+  88% { transform: rotate(-4deg); }
+  92% { transform: rotate(3deg); }
+  96% { transform: rotate(0deg); }
+}
+
 .noscript-note {
   position: fixed;
   z-index: 90;
@@ -429,7 +642,7 @@ img {
 
   .portrait-card {
     right: -0.25rem;
-    bottom: 2.25rem;
+    bottom: 6.25rem;
     width: min(64vw, 17rem);
   }
 
