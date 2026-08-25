@@ -1,0 +1,19 @@
+{
+  "name": "carlos-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Carlos Capin's Drive-powered static portfolio for GitHub Pages",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "gas:login": "clasp login",
+    "gas:push": "clasp push --force",
+    "gas:open": "clasp open-script",
+    "gas:deploy": "clasp redeploy --description \"Carlos Portfolio Media API\" AKfycbwH4w3oSUK4p_C-KGfhwM1ePEeqrfpIX77ejKvLpRd-7TfNzjJu0ySPUjADt_5ypjo"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.4.0"
+  }
+}

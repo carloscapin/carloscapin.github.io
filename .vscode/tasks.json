@@ -1,0 +1,93 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Carlos Apps Script: Login",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "gas:login"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Carlos Apps Script: Push Code",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "gas:push"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Carlos Apps Script: Open Project",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "gas:open"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Carlos Apps Script: Deploy Web App",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["run", "gas:deploy"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Carlos Apps Script: Push + Deploy",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Carlos Apps Script: Push Code",
+        "Carlos Apps Script: Deploy Web App"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Carlos Portfolio: Run Tests",
+      "type": "process",
+      "command": "npm.cmd",
+      "args": ["test"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ]
+}

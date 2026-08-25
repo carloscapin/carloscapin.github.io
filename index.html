@@ -1,7 +1,149 @@
-<body>
-Jirog Supot
-jerog
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Carlos Capin — graphic artist and marketing management creative portfolio."
+    >
+    <meta name="theme-color" content="#0d0e0d">
+    <title>Carlos Capin — Graphic Artist</title>
+    <link rel="preconnect" href="https://drive.google.com">
+    <link rel="preconnect" href="https://lh3.googleusercontent.com">
+    <link rel="stylesheet" href="static/css/main.css">
+    <script src="static/js/drive-config.js" defer></script>
+    <script src="static/js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
+    <header class="masthead" aria-label="Primary navigation">
+      <a class="masthead__brand" href="#home" aria-label="Carlos Capin, home">
+        Visual artist
+      </a>
+      <p class="masthead__statement">Creative works &amp; visual journey</p>
+      <nav class="masthead__nav" aria-label="Portfolio sections">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  
-</body>
+    <main id="main-content">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero__art" aria-hidden="true">
+          <div class="hero__drive-background" id="hero-background"></div>
+          <div class="hero__grain"></div>
+          <div class="hero__arch hero__arch--one"></div>
+          <div class="hero__arch hero__arch--two"></div>
+          <div class="hero__shadow"></div>
+        </div>
+
+        <div class="hero__copy">
+          <p class="hero__kicker">Carlos Capin · Portfolio <span data-current-year>2026</span></p>
+          <h1 class="hero__title" id="hero-title">
+            <span>Graphic</span>
+            <span>Artist</span>
+          </h1>
+          <p class="hero__discipline">Marketing Management</p>
+          <a class="hero__cta" href="#work">
+            <span>Explore selected work</span>
+            <span aria-hidden="true">↘</span>
+          </a>
+        </div>
+
+        <figure class="portrait-card" id="portrait-card">
+          <span class="portrait-card__tape" aria-hidden="true"></span>
+          <div class="portrait-card__media">
+            <img id="hero-portrait" alt="Portrait of Carlos Capin" hidden>
+            <div class="portrait-card__placeholder" id="portrait-placeholder" aria-hidden="true">
+              <img src="static/media/fallback/carlos-portrait-placeholder.svg" alt="">
+            </div>
+          </div>
+          <figcaption>
+            <span class="portrait-card__script">Artist Portfolio</span>
+            <span class="portrait-card__name">Carlos Capin</span>
+          </figcaption>
+        </figure>
+
+        <p class="hero__folio" aria-hidden="true">(01)</p>
+        <a class="hero__scroll" href="#work" aria-label="Scroll to selected work">
+          <span>Scroll to discover</span>
+          <span class="hero__scroll-line" aria-hidden="true"></span>
+        </a>
+      </section>
+
+      <section class="work section-shell" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p class="section-heading__eyebrow">Selected portfolio</p>
+          <h2 id="work-title">Work shaped by <em>curiosity.</em></h2>
+          <p>
+            Brand visuals, campaign ideas, illustrations, and moving images—loaded directly
+            from Carlos&rsquo; curated Google Drive.
+          </p>
+        </div>
+
+        <div class="work__toolbar" id="category-filters" aria-label="Filter projects" hidden></div>
+        <div class="work__grid" id="portfolio-grid" aria-live="polite"></div>
+        <div class="work__empty" id="portfolio-empty">
+          <p class="work__empty-number">00</p>
+          <div>
+            <h3>New pieces are being curated.</h3>
+            <p>Selected projects will appear here as they are added to the portfolio archive.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="about" aria-labelledby="about-title">
+        <div class="about__index" aria-hidden="true">02</div>
+        <div class="about__statement">
+          <p class="section-heading__eyebrow">Artist / Marketer / Storyteller</p>
+          <h2 id="about-title">
+            I turn clear strategy into visual work that <em>feels human.</em>
+          </h2>
+        </div>
+        <div class="about__copy">
+          <p>
+            I&rsquo;m Carlos Capin, a graphic artist with a Marketing Management perspective.
+            My work connects visual craft with the purpose behind a brand, campaign, or story.
+          </p>
+          <a href="#contact">Let&rsquo;s create something memorable <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="contact section-shell" id="contact" aria-labelledby="contact-title">
+        <p class="section-heading__eyebrow">Start a conversation</p>
+        <h2 id="contact-title">Have a project in mind?</h2>
+        <button class="contact__link" id="contact-email" type="button" disabled>
+          <span>Let&rsquo;s work together</span>
+          <span aria-hidden="true">↗</span>
+        </button>
+        <footer class="site-footer">
+          <p>© <span data-current-year>2026</span> Carlos Capin</p>
+          <a
+            id="drive-archive-link"
+            href="https://drive.google.com/drive/folders/1hnMwacczNwuYDOuuzSN_KQjQlFAQ1JtB"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Media archive</a>
+          <a href="#home">Back to top ↑</a>
+        </footer>
+      </section>
+    </main>
+
+    <dialog class="media-dialog" id="media-dialog" aria-labelledby="media-dialog-title">
+      <button class="media-dialog__close" type="button" aria-label="Close preview">×</button>
+      <div class="media-dialog__stage" id="media-dialog-stage"></div>
+      <div class="media-dialog__caption">
+        <p id="media-dialog-category"></p>
+        <h2 id="media-dialog-title">Project preview</h2>
+        <a id="media-dialog-source" target="_blank" rel="noopener noreferrer">Open original ↗</a>
+      </div>
+    </dialog>
+
+    <noscript>
+      <p class="noscript-note">Please enable JavaScript to view Carlos&rsquo; Drive-powered portfolio.</p>
+    </noscript>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Carlos Apps Script: Open Project",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm.cmd run gas:open",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Carlos Apps Script: Push Code",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm.cmd run gas:push",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Carlos Apps Script: Deploy Web App",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm.cmd run gas:deploy",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
