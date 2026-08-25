@@ -9,6 +9,10 @@
     portraitPlaceholder: document.querySelector("#portrait-placeholder"),
     portraitFrame: document.querySelector("#portrait-frame"),
     portraitTape: document.querySelector("#portrait-tape"),
+    aboutBackground: document.querySelector("#about-background"),
+    aboutPhoto: document.querySelector("#about-photo"),
+    aboutPortrait: document.querySelector("#about-portrait"),
+    aboutPlaceholder: document.querySelector("#about-placeholder"),
     dock: document.querySelector("#icon-dock"),
     dockItems: [...document.querySelectorAll(".icon-dock__item")],
     dockMinimize: document.querySelector("#icon-dock-minimize"),
@@ -16,7 +20,9 @@
     dockStatus: document.querySelector("#icon-dock-status"),
   };
   const DOCK_IDLE_MS = 6000;
+  const DOCK_TARGETS = Object.freeze({ Home: "#home", About: "#about" });
   let dockIdleTimer = 0;
+  let dockScrollFrame = 0;
   let heroMediaGeneration = 0;
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
@@ -90,19 +96,39 @@
     });
   }
 
-  function selectDockItem(selectedItem) {
+  function setDockSelection(selectedItem, announce = true) {
     elements.dockItems.forEach((item) => {
       item.setAttribute("aria-pressed", String(item === selectedItem));
     });
 
     const selectedView = selectedItem.dataset.dockView || selectedItem.getAttribute("aria-label");
-    elements.dockStatus.textContent = `${selectedView} selected`;
+    if (announce) elements.dockStatus.textContent = `${selectedView} selected`;
+    return selectedView;
+  }
 
-    if (selectedView === "Home") {
-      document.querySelector("#home")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  function selectDockItem(selectedItem) {
+    const selectedView = setDockSelection(selectedItem);
+    document.querySelector(DOCK_TARGETS[selectedView])?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     scheduleDockAutoCollapse();
+  }
+
+  function syncDockWithPage() {
+    dockScrollFrame = 0;
+    const about = document.querySelector("#about");
+    const selectedView = about && window.scrollY + window.innerHeight * 0.5 >= about.offsetTop
+      ? "About"
+      : "Home";
+    const selectedItem = elements.dockItems.find((item) => item.dataset.dockView === selectedView);
+
+    if (selectedItem && selectedItem.getAttribute("aria-pressed") !== "true") {
+      setDockSelection(selectedItem, false);
+    }
+  }
+
+  function handlePageScroll() {
+    revealDockMinimize();
+    if (!dockScrollFrame) dockScrollFrame = window.requestAnimationFrame(syncDockWithPage);
   }
 
   function clearDockIdleTimer() {
@@ -176,15 +202,70 @@
         if (!elements.dock.matches(":focus-within")) scheduleDockAutoCollapse();
       });
     });
-    window.addEventListener("scroll", revealDockMinimize, { passive: true });
+    window.addEventListener("scroll", handlePageScroll, { passive: true });
     window.addEventListener("wheel", revealDockMinimize, { passive: true });
     window.addEventListener("touchmove", revealDockMinimize, { passive: true });
     setDockMinimized(false, false);
+    syncDockWithPage();
   }
 
   function clearBackground() {
     elements.background.style.removeProperty("background-image");
     elements.background.classList.remove("is-loaded");
+  }
+
+  function clearAboutBackground() {
+    elements.aboutBackground.style.removeProperty("background-image");
+    elements.aboutBackground.classList.remove("is-loaded");
+  }
+
+  function applyAboutMedia(items) {
+    const dedicatedPortrait = items
+      .filter((item) => isImage(item) && belongsTo(item, "about", "portrait"))
+      .sort(mediaSort)[0];
+    const fallbackPortrait = items
+      .filter((item) => isImage(item) && belongsTo(item, "portfolio", "portrait-photography"))
+      .sort(mediaSort)[0];
+    const dedicatedBackground = items
+      .filter((item) => isImage(item) && belongsTo(item, "about", "background"))
+      .sort(mediaSort)[0];
+    const fallbackBackground = items
+      .filter((item) => isImage(item) && belongsTo(item, "landing", "background"))
+      .sort(mediaSort)[0];
+    const portrait = dedicatedPortrait || fallbackPortrait;
+    const background = dedicatedBackground || fallbackBackground;
+
+    elements.aboutPortrait.hidden = true;
+    elements.aboutPlaceholder.hidden = false;
+    elements.aboutPhoto.classList.add("is-loading");
+
+    if (portrait) {
+      elements.aboutPortrait.onload = () => {
+        elements.aboutPortrait.hidden = false;
+        elements.aboutPlaceholder.hidden = true;
+        elements.aboutPhoto.classList.remove("is-loading");
+      };
+      elements.aboutPortrait.onerror = () => {
+        elements.aboutPortrait.hidden = true;
+        elements.aboutPlaceholder.hidden = false;
+      };
+      elements.aboutPortrait.src = driveThumbnail(portrait, "w1200");
+    } else {
+      elements.aboutPortrait.removeAttribute("src");
+    }
+
+    if (background) {
+      const backgroundUrl = driveThumbnail(background, "w2400");
+      const preload = new Image();
+      preload.onload = () => {
+        elements.aboutBackground.style.backgroundImage = `url("${backgroundUrl}")`;
+        elements.aboutBackground.classList.add("is-loaded");
+      };
+      preload.onerror = clearAboutBackground;
+      preload.src = backgroundUrl;
+    } else {
+      clearAboutBackground();
+    }
   }
 
   function clearPortrait() {
@@ -313,6 +394,7 @@
     }
 
     applyHeroMedia(items);
+    applyAboutMedia(items);
     document.documentElement.dataset.mediaStatus = "ready";
   }
 

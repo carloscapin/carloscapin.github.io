@@ -33,19 +33,22 @@
 html,
 body {
   width: 100%;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-  overscroll-behavior: none;
+  min-height: 100%;
 }
 
 html {
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--ink);
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: none;
 }
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   background: var(--ink);
   color: var(--paper);
   font-family: var(--sans);
@@ -122,6 +125,8 @@ img {
   min-height: 0;
   overflow: hidden;
   background: #0c0e0c;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .hero__art,
@@ -488,6 +493,285 @@ img {
   fill: #fbfbfa;
 }
 
+.about {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: #10120f;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.about__art,
+.about__drive-background,
+.about__veil,
+.about__grain {
+  position: absolute;
+  inset: 0;
+}
+
+.about__art {
+  z-index: -2;
+  background: radial-gradient(circle at 70% 42%, #605a4f 0, #292c27 37%, #0d0f0d 78%);
+}
+
+.about__drive-background {
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  scale: 1.035;
+  transition: opacity 700ms ease, scale 1500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about__drive-background.is-loaded {
+  opacity: 1;
+  scale: 1;
+}
+
+.about__veil {
+  background:
+    linear-gradient(90deg, rgba(8, 9, 8, 0.36), rgba(8, 9, 8, 0.68) 44%, rgba(8, 9, 8, 0.28)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.3));
+}
+
+.about__grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.about__title {
+  position: absolute;
+  z-index: 5;
+  top: clamp(4.6rem, 8.5vh, 7rem);
+  left: clamp(2.5rem, 4.8vw, 6rem);
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(4.4rem, 8.2vw, 9rem);
+  font-weight: 400;
+  letter-spacing: -0.075em;
+  line-height: 0.78;
+  text-transform: uppercase;
+  transform: scaleX(0.9);
+  transform-origin: left center;
+}
+
+.about-photo {
+  position: absolute;
+  z-index: 4;
+  top: 27%;
+  left: clamp(3.4rem, 7vw, 8.5rem);
+  width: min(29vw, 24rem);
+  margin: 0;
+  padding: clamp(0.7rem, 1vw, 1rem) clamp(0.7rem, 1vw, 1rem) clamp(0.85rem, 1.35vw, 1.35rem);
+  background: #f3f2eb;
+  box-shadow: 0 1.7rem 3.8rem rgba(0, 0, 0, 0.46);
+  color: #101210;
+  rotate: -2.4deg;
+  transform-origin: 50% 5%;
+  transition: rotate 420ms cubic-bezier(0.22, 1, 0.36, 1), translate 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-photo:hover {
+  translate: 0 -0.35rem;
+  rotate: -1.2deg;
+}
+
+.about-photo__tape {
+  position: absolute;
+  z-index: 2;
+  top: -1.15rem;
+  left: 34%;
+  width: 34%;
+  height: clamp(2rem, 3.2vw, 2.9rem);
+  background: rgba(234, 226, 202, 0.91);
+  box-shadow: 0 0.18rem 0.4rem rgba(0, 0, 0, 0.18);
+  clip-path: polygon(2% 8%, 22% 1%, 36% 7%, 55% 2%, 72% 9%, 96% 4%, 100% 93%, 78% 98%, 57% 92%, 38% 100%, 18% 91%, 0 96%);
+  rotate: 1.5deg;
+}
+
+.about-photo__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 0.86 / 1;
+  background: #181a18;
+}
+
+.about-photo__media > img,
+.about-photo__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.about-photo__media > img {
+  object-fit: cover;
+  object-position: center 19%;
+}
+
+.about-photo__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #171917;
+}
+
+.about-photo__placeholder::after {
+  width: 56%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 217, 202, 0.19), rgba(72, 75, 69, 0.12) 46%, rgba(0, 0, 0, 0.5));
+  content: "";
+  filter: blur(0.8rem);
+}
+
+.about-photo figcaption {
+  padding: clamp(0.75rem, 1.5vh, 1.2rem) 0 0.1rem;
+  overflow: hidden;
+  font-family: var(--script);
+  font-size: clamp(1.1rem, 2.15vw, 2rem);
+  line-height: 1;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.about__folders {
+  position: absolute;
+  z-index: 4;
+  top: 29%;
+  right: clamp(2.8rem, 5vw, 6.5rem);
+  display: grid;
+  width: min(53vw, 47rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.4rem, 3vw, 3.7rem);
+}
+
+.folder-card {
+  --folder-tilt: -1deg;
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(11.5rem, 26vh, 15.5rem);
+  padding: clamp(4.6rem, 9vh, 6.2rem) clamp(2.2rem, 3.2vw, 3.4rem) clamp(1.5rem, 3vh, 2.4rem);
+  color: #111310;
+  cursor: default;
+  filter: drop-shadow(0 1.15rem 1.7rem rgba(0, 0, 0, 0.3));
+  outline: none;
+  transform: rotate(var(--folder-tilt));
+  transform-origin: 50% 82%;
+  transition: filter 280ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.folder-card::before,
+.folder-card::after {
+  position: absolute;
+  z-index: -1;
+  background: #f8f8f5;
+  content: "";
+  transition: background 240ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.folder-card::before {
+  top: 0;
+  left: 0;
+  width: 48%;
+  height: 34%;
+  border-radius: 0.65rem 0.55rem 0 0;
+  clip-path: polygon(0 0, 78% 0, 100% 42%, 100% 100%, 0 100%);
+}
+
+.folder-card::after {
+  inset: 18% 0 0;
+  border-radius: 0.42rem;
+  clip-path: polygon(0 0, 100% 0, 100% 18%, 89% 100%, 0 100%);
+}
+
+.folder-card:hover,
+.folder-card:focus-visible {
+  filter: drop-shadow(0 1.7rem 2rem rgba(0, 0, 0, 0.4));
+  transform: translateY(-0.7rem) rotate(calc(var(--folder-tilt) * -0.3));
+}
+
+.folder-card:hover::before,
+.folder-card:focus-visible::before {
+  background: #fff;
+  transform: translateY(-0.25rem) rotate(-1deg);
+}
+
+.folder-card:hover::after,
+.folder-card:focus-visible::after {
+  background: #fff;
+  transform: skewY(-0.6deg);
+}
+
+.folder-card:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 0.4rem;
+}
+
+.folder-card--specialty {
+  --folder-tilt: 1.1deg;
+  margin-top: clamp(2rem, 7vh, 4.8rem);
+}
+
+.folder-card__content {
+  position: relative;
+  z-index: 1;
+  transition: translate 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.folder-card:hover .folder-card__content,
+.folder-card:focus-visible .folder-card__content {
+  translate: 0 -0.2rem;
+}
+
+.folder-card p {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.folder-card__headline {
+  max-width: 12ch;
+  font-family: "Open Sauce Sans", Arial, sans-serif;
+  font-size: clamp(1rem, 1.55vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+.folder-card__action {
+  margin-top: 0.65rem !important;
+  font-size: clamp(0.82rem, 1.2vw, 1.08rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.about__bio {
+  position: absolute;
+  z-index: 4;
+  right: clamp(2.8rem, 5vw, 6.5rem);
+  bottom: clamp(5.6rem, 11vh, 8.5rem);
+  width: min(53vw, 47rem);
+  margin: 0;
+  font-size: clamp(0.68rem, 0.88vw, 0.88rem);
+  letter-spacing: -0.025em;
+  line-height: 1.32;
+  text-wrap: pretty;
+}
+
+.about__page-number {
+  position: absolute;
+  right: clamp(1.1rem, 2vw, 2.4rem);
+  bottom: clamp(1rem, 2vh, 1.5rem);
+  font-size: clamp(0.56rem, 0.65vw, 0.7rem);
+  font-weight: 700;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -783,6 +1067,33 @@ img {
     bottom: auto;
     width: min(47vw, 24rem);
   }
+
+  .about__title {
+    top: 5.4rem;
+    left: 2rem;
+    font-size: clamp(3.8rem, 9vw, 6.5rem);
+  }
+
+  .about-photo {
+    top: 28%;
+    left: 3.5%;
+    width: min(34vw, 21rem);
+  }
+
+  .about__folders,
+  .about__bio {
+    right: 3.5%;
+    width: 56vw;
+  }
+
+  .about__folders {
+    gap: 1.2rem;
+  }
+
+  .folder-card {
+    padding-right: 1.65rem;
+    padding-left: 1.65rem;
+  }
 }
 
 @media (max-width: 620px) {
@@ -846,6 +1157,70 @@ img {
     width: 56vw;
     height: 7rem;
   }
+
+  .about__title {
+    top: 5.2rem;
+    left: 1.2rem;
+    font-size: clamp(3.4rem, 15vw, 5.2rem);
+  }
+
+  .about-photo {
+    top: 24%;
+    left: 4%;
+    width: 40vw;
+    padding: 0.5rem 0.5rem 0.75rem;
+  }
+
+  .about-photo__tape {
+    top: -0.75rem;
+    height: 1.7rem;
+  }
+
+  .about-photo figcaption {
+    padding-top: 0.6rem;
+    font-size: clamp(0.72rem, 3.2vw, 1rem);
+  }
+
+  .about__folders {
+    top: 24%;
+    right: 3%;
+    width: 50vw;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .folder-card {
+    min-height: clamp(7.7rem, 17vh, 9.2rem);
+    padding: clamp(3rem, 7vh, 3.8rem) 1rem 0.8rem;
+    filter: drop-shadow(0 0.7rem 1rem rgba(0, 0, 0, 0.3));
+  }
+
+  .folder-card--specialty {
+    margin-top: 0;
+  }
+
+  .folder-card__headline {
+    font-size: clamp(0.68rem, 2.9vw, 0.86rem);
+  }
+
+  .folder-card__action {
+    margin-top: 0.35rem !important;
+    font-size: clamp(0.6rem, 2.5vw, 0.75rem);
+  }
+
+  .about__bio {
+    right: auto;
+    bottom: 4.9rem;
+    left: 4%;
+    width: 92%;
+    font-size: clamp(0.52rem, 2.05vw, 0.67rem);
+    line-height: 1.22;
+  }
+
+  .about__page-number {
+    right: 1.2rem;
+    bottom: 1rem;
+  }
 }
 
 @media (max-height: 700px) and (min-width: 961px) {
@@ -873,6 +1248,33 @@ img {
 
   .portrait-card__name {
     font-size: clamp(1.8rem, 3.65vw, 3.6rem);
+  }
+
+  .about__title {
+    top: 4.5rem;
+    font-size: clamp(4rem, 7.5vw, 6.8rem);
+  }
+
+  .about-photo {
+    top: 25%;
+    width: min(25vw, 19rem);
+  }
+
+  .about__folders {
+    top: 25%;
+  }
+
+  .folder-card {
+    min-height: 10.2rem;
+    padding-top: 4.2rem;
+  }
+
+  .folder-card--specialty {
+    margin-top: 1.5rem;
+  }
+
+  .about__bio {
+    bottom: 4.8rem;
   }
 }
 

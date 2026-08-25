@@ -1,6 +1,6 @@
 # Carlos Capin Portfolio
 
-A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive. The hero preserves the full Drive background composition, a compact Polaroid scale, a less-cropped portrait treatment, reference-matched Didot/handwritten typography, and the lower-left office-folder silhouette.
+A fresh, static GitHub Pages portfolio for Carlos. The current phase contains full-viewport Home and About Me sections with one-step vertical scroll snapping. Their backgrounds and portraits load automatically from Google Drive. The Home page preserves the full Drive background composition, compact Polaroid treatment, reference-matched typography, and lower-left office-folder silhouette. About Me adds a Drive-powered portrait, two animated office-folder cards, and Carlos' profile statement.
 
 A fixed lower-center icon dock previews the future portfolio navigation. Its six transparent buttons change icon color only on hover or selection, with compact pointed tooltips and no separators. The dock automatically collapses after six seconds without interaction. Its manual minimize control appears only after a scroll gesture, while the compact restore control uses a periodic rotational shake.
 
@@ -15,16 +15,19 @@ Carlos media root
 |   |-- 02-portrait         # first image becomes Carlos' portrait
 |   |-- 03-frame            # transparent Polaroid frame (optional)
 |   `-- 04-tape             # transparent tape overlay (optional)
-`-- 02-portfolio
+|-- 02-portfolio
     |-- 01-graphic-design
     |-- 02-marketing-campaigns
     |-- 03-visual-storytelling
     |-- 04-portrait-photography
     |-- 05-video
     `-- 06-other
+`-- 03-about
+    |-- 01-portrait          # first image becomes the About Me portrait
+    `-- 02-background        # optional About Me background
 ```
 
-Only the two `01-landing` folders are rendered during the hero-polishing phase. The organized `02-portfolio` folders remain ready for later sections but are intentionally not displayed yet. Prefix filenames with `01-`, `02-`, and so on when a specific order is needed.
+The Home page reads `01-landing`. About Me prefers `03-about`, with `02-portfolio/04-portrait-photography` and the landing background as temporary fallbacks. The other organized `02-portfolio` folders remain ready for later sections but are intentionally not displayed yet. Prefix filenames with `01-`, `02-`, and so on when a specific order is needed.
 
 Hero media updates happen only in Drive:
 
@@ -34,6 +37,7 @@ Hero media updates happen only in Drive:
 - Keep the active backdrop in `01-landing/01-background`.
 - Keep the active Carlos portrait in `01-landing/02-portrait`.
 - Keep the transparent Polaroid frame in `01-landing/03-frame` and its tape in `01-landing/04-tape` when Drive write access is available.
+- Keep the active About portrait in `03-about/01-portrait`; optionally replace the About backdrop in `03-about/02-background`.
 - The current shared folder keeps the supplied frame and tape beside the portrait; the page recognizes them automatically by their tall-frame and wide-tape proportions.
 
 The page checks for changes every five minutes. The Apps Script catalog has a one-minute cache.

@@ -9,6 +9,7 @@ test("fresh Carlos landing contains the reference hierarchy and identity", async
   assert.match(html, /Carlos Capin/);
   assert.match(html, /Graphic[\s\S]*Artist/i);
   assert.match(html, /Marketing Management/i);
+  assert.match(html, /Driven and enthusiastic Business Administration graduate/);
   assert.doesNotMatch(html, /Jerome|Jirog/i);
   assert.match(html, /class="portrait-card is-portrait-loading"/);
   assert.match(html, /class="portrait-card__placeholder"[^>]*><\/div>/);
@@ -49,11 +50,12 @@ test("Drive configuration points to Carlos' supplied folder", async () => {
   assert.doesNotMatch(config, /jerome|jirog/i);
 });
 
-test("the first release renders only one hero section", async () => {
+test("the site renders only the polished Home and About sections", async () => {
   const html = await read("index.html");
-  assert.equal((html.match(/<section\b/g) || []).length, 1);
-  assert.match(html, /<section class="hero"/);
-  assert.doesNotMatch(html, /id="(?:work|about|contact)"/);
+  assert.equal((html.match(/<section\b/g) || []).length, 2);
+  assert.match(html, /<section class="hero" id="home"/);
+  assert.match(html, /<section class="about" id="about"/);
+  assert.doesNotMatch(html, /id="(?:work|contact)"/);
   assert.doesNotMatch(html, /<dialog\b|<footer\b|href="#work"/);
 });
 
@@ -78,14 +80,16 @@ test("bottom icon dock auto-collapses and keeps its controls visually clean", as
   assert.match(css, /\.icon-dock__item > span::after/);
   assert.doesNotMatch(css, /\.icon-dock__item \+ \.icon-dock__item::before/);
   assert.match(app, /DOCK_IDLE_MS\s*=\s*6000/);
+  assert.match(app, /DOCK_TARGETS\s*=\s*Object\.freeze\(\{ Home: "#home", About: "#about" \}\)/);
   assert.match(app, /scheduleDockAutoCollapse/);
   assert.match(app, /addEventListener\("pointermove", scheduleDockAutoCollapse/);
-  assert.match(app, /addEventListener\("scroll", revealDockMinimize/);
   assert.match(app, /setDockMinimized/);
+  assert.match(app, /function syncDockWithPage\(\)/);
+  assert.match(app, /window\.addEventListener\("scroll", handlePageScroll/);
   assert.match(app, /setAttribute\("aria-pressed"/);
 });
 
-test("Drive catalog is limited to automatic hero media", async () => {
+test("Drive catalog powers automatic Home and About media", async () => {
   const [html, css, app] = await Promise.all([
     read("index.html"),
     read("static/css/main.css"),
@@ -97,6 +101,10 @@ test("Drive catalog is limited to automatic hero media", async () => {
   assert.match(app, /belongsTo\(item, "landing", "portrait"\)/);
   assert.match(app, /belongsTo\(item, "landing", "frame"\)/);
   assert.match(app, /belongsTo\(item, "landing", "tape"\)/);
+  assert.match(app, /belongsTo\(item, "about", "portrait"\)/);
+  assert.match(app, /belongsTo\(item, "about", "background"\)/);
+  assert.match(app, /belongsTo\(item, "portfolio", "portrait-photography"\)/);
+  assert.match(app, /applyAboutMedia\(items\)/);
   assert.match(app, /aspectRatio >= 1\.6 \? "tape" : aspectRatio <= 1\.35 \? "frame"/);
   assert.match(css, /\.portrait-card__placeholder::after\s*\{[\s\S]*border-radius:\s*50%[\s\S]*radial-gradient/);
   assert.match(css, /\.portrait-card\.is-portrait-loading\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/);
@@ -108,12 +116,29 @@ test("Drive catalog is limited to automatic hero media", async () => {
   assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });
 
+test("About page uses animated folder cards and the supplied profile copy", async () => {
+  const [html, css] = await Promise.all([read("index.html"), read("static/css/main.css")]);
+  assert.match(html, /<h2 class="about__title"[^>]*>About Me<\/h2>/);
+  assert.equal((html.match(/class="folder-card /g) || []).length, 2);
+  assert.match(html, /6 months of creative experience/i);
+  assert.match(html, /Specialized in marketing poster &amp; video editing/i);
+  assert.match(html, /commitment to delivering Impactful results/);
+  assert.match(html, /id="about-portrait"/);
+  assert.match(css, /\.about\s*\{[\s\S]*height:\s*100dvh[\s\S]*scroll-snap-align:\s*start/);
+  assert.match(css, /\.folder-card::before,[\s\S]*\.folder-card::after/);
+  assert.match(css, /\.folder-card:hover,[\s\S]*translateY\(-0\.7rem\)/);
+  assert.match(css, /\.folder-card:focus-visible/);
+});
+
 test("Apps Script creates the required Drive structure and returns JSONP", async () => {
   const script = await read("google-apps-script/Code.gs");
   assert.match(script, /setupCarlosPortfolio/);
   assert.match(script, /01-landing/);
   assert.match(script, /03-frame/);
   assert.match(script, /04-tape/);
+  assert.match(script, /03-about/);
+  assert.match(script, /01-portrait/);
+  assert.match(script, /02-background/);
   assert.match(script, /02-portfolio/);
   assert.match(script, /ANYONE_WITH_LINK/);
   assert.match(script, /callback \? `\$\{callback\}\(\$\{serialized\}\);`/);
@@ -123,15 +148,18 @@ test("landing remains edge-to-edge and responsive", async () => {
   const [html, css] = await Promise.all([read("index.html"), read("static/css/main.css")]);
   assert.match(css, /height:\s*100svh/);
   assert.match(css, /height:\s*100dvh/);
-  assert.match(css, /html,\s*body\s*\{[\s\S]*height:\s*100%[\s\S]*overflow:\s*hidden/);
+  assert.match(css, /html\s*\{[\s\S]*overflow-y:\s*auto[\s\S]*scroll-snap-type:\s*y mandatory/);
+  assert.match(css, /body\s*\{[\s\S]*overflow-x:\s*hidden[\s\S]*overflow-y:\s*visible/);
   assert.match(css, /\.hero\s*\{[\s\S]*min-height:\s*0[\s\S]*overflow:\s*hidden/);
+  assert.match(css, /\.hero\s*\{[\s\S]*scroll-snap-align:\s*start[\s\S]*scroll-snap-stop:\s*always/);
   assert.doesNotMatch(css, /\.hero\s*\{[^}]*min-height:\s*(?:32|38|40)rem/);
   assert.match(html, /<svg[\s\S]*class="hero__folder"[\s\S]*<path d="[^"]*Q[^"]*"/);
   assert.doesNotMatch(html, /class="hero__folio"/);
   assert.match(css, /\.hero__folder path\s*\{[\s\S]*fill:\s*#fbfbfa/);
   assert.match(css, /\.hero__folder\s*\{[\s\S]*width:\s*min\(43vw, 31rem\)[\s\S]*height:\s*clamp\(8\.2rem, 18vh, 11rem\)/);
   assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.hero__folder\s*\{[\s\S]*width:\s*56vw[\s\S]*height:\s*7rem/);
-  assert.doesNotMatch(css, /\.hero__folder::before|\.hero__folder[\s\S]*clip-path:\s*polygon/);
+  assert.doesNotMatch(css, /\.hero__folder::before/);
+  assert.doesNotMatch(css.match(/\.hero__folder\s*\{[\s\S]*?\n\}/)?.[0] || "", /clip-path:\s*polygon/);
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
   assert.match(css, /\.hero__copy\s*\{[\s\S]*right:\s*calc\(45% \+ clamp\(0\.65rem, 1vw, 1\.25rem\)\)[\s\S]*left:\s*auto/);
   assert.match(css, /\.portrait-card\s*\{[\s\S]*right:\s*auto[\s\S]*left:\s*calc\(55% \+ clamp\(0\.65rem, 1vw, 1\.25rem\)\)/);

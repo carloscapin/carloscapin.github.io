@@ -40,6 +40,8 @@ function setupCarlosPortfolio() {
     ["01-landing", "02-portrait"],
     ["01-landing", "03-frame"],
     ["01-landing", "04-tape"],
+    ["03-about", "01-portrait"],
+    ["03-about", "02-background"],
     ["02-portfolio", "01-graphic-design"],
     ["02-portfolio", "02-marketing-campaigns"],
     ["02-portfolio", "03-visual-storytelling"],
