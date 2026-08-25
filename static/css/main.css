@@ -283,12 +283,20 @@ img {
 .portrait-card.is-drive-framed .portrait-card__media {
   position: absolute;
   z-index: 1;
-  top: 7.6%;
-  left: 7.65%;
-  width: 84.35%;
-  height: 71.65%;
+  top: 6.4%;
+  left: 7%;
+  width: 86%;
+  height: 74%;
   aspect-ratio: auto;
   box-shadow: none;
+  rotate: -1.55deg;
+  transform-origin: center;
+}
+
+.portrait-card.is-drive-framed .portrait-card__media > img {
+  object-fit: cover;
+  object-position: center 18%;
+  scale: 1.03;
 }
 
 .portrait-card.is-drive-framed figcaption {

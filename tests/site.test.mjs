@@ -101,6 +101,8 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(css, /\.portrait-card__name\s*\{[\s\S]*font-family:\s*var\(--script\)/);
   assert.match(css, /\.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*contain[\s\S]*scale:\s*1\.08/);
   assert.match(css, /\.portrait-card\.is-drive-framed\s*\{[\s\S]*aspect-ratio:\s*1150 \/ 1368/);
+  assert.match(css, /\.portrait-card\.is-drive-framed \.portrait-card__media\s*\{[\s\S]*width:\s*86%[\s\S]*height:\s*74%[\s\S]*rotate:\s*-1\.55deg/);
+  assert.match(css, /\.portrait-card\.is-drive-framed \.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*cover[\s\S]*object-position:\s*center 18%[\s\S]*scale:\s*1\.03/);
   assert.match(css, /\.portrait-card__drive-tape\s*\{[\s\S]*width:\s*32%/);
   assert.doesNotMatch(css, /\.portrait-card::before|\.portrait-card::after/);
   assert.match(css, /@media \(max-width: 620px\)/);
