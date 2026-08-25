@@ -20,10 +20,16 @@
     dockStatus: document.querySelector("#icon-dock-status"),
   };
   const DOCK_IDLE_MS = 6000;
-  const DOCK_TARGETS = Object.freeze({ Home: "#home", About: "#about" });
+  const PAGE_TARGETS = Object.freeze({ Home: "index.html", About: "about.html" });
+  const SCROLL_NAV_THRESHOLD = 80;
+  const currentPage = document.body.dataset.page === "about" ? "about" : "home";
   let dockIdleTimer = 0;
-  let dockScrollFrame = 0;
   let heroMediaGeneration = 0;
+  let pageNavigationLocked = false;
+  let scrollNavigationTotal = 0;
+  let scrollNavigationDirection = 0;
+  let scrollNavigationResetTimer = 0;
+  let touchStartY = null;
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
   const slug = (value = "") =>
@@ -102,23 +108,31 @@
     });
 
     const selectedView = selectedItem.dataset.dockView || selectedItem.getAttribute("aria-label");
-    if (announce) elements.dockStatus.textContent = `${selectedView} selected`;
+    if (announce && elements.dockStatus) elements.dockStatus.textContent = `${selectedView} selected`;
     return selectedView;
+  }
+
+  function navigateToPage(selectedView, direction) {
+    const target = PAGE_TARGETS[selectedView];
+    const targetPage = selectedView?.toLowerCase();
+    if (!target || targetPage === currentPage || pageNavigationLocked) return false;
+
+    pageNavigationLocked = true;
+    document.documentElement.style.setProperty("--page-exit-y", direction === "up" ? "0.45rem" : "-0.45rem");
+    document.documentElement.classList.add("is-page-leaving");
+    window.setTimeout(() => window.location.assign(target), 180);
+    return true;
   }
 
   function selectDockItem(selectedItem) {
     const selectedView = setDockSelection(selectedItem);
-    document.querySelector(DOCK_TARGETS[selectedView])?.scrollIntoView({ behavior: "smooth", block: "start" });
+    navigateToPage(selectedView, selectedView === "Home" ? "up" : "down");
 
     scheduleDockAutoCollapse();
   }
 
   function syncDockWithPage() {
-    dockScrollFrame = 0;
-    const about = document.querySelector("#about");
-    const selectedView = about && window.scrollY + window.innerHeight * 0.5 >= about.offsetTop
-      ? "About"
-      : "Home";
+    const selectedView = currentPage === "about" ? "About" : "Home";
     const selectedItem = elements.dockItems.find((item) => item.dataset.dockView === selectedView);
 
     if (selectedItem && selectedItem.getAttribute("aria-pressed") !== "true") {
@@ -126,9 +140,56 @@
     }
   }
 
-  function handlePageScroll() {
+  function resetScrollNavigation() {
+    window.clearTimeout(scrollNavigationResetTimer);
+    scrollNavigationTotal = 0;
+    scrollNavigationDirection = 0;
+  }
+
+  function handlePageWheel(event) {
     revealDockMinimize();
-    if (!dockScrollFrame) dockScrollFrame = window.requestAnimationFrame(syncDockWithPage);
+    if (pageNavigationLocked || event.ctrlKey || !event.deltaY) return;
+
+    const direction = Math.sign(event.deltaY);
+    const canNavigate = (currentPage === "home" && direction > 0)
+      || (currentPage === "about" && direction < 0);
+
+    if (!canNavigate) {
+      resetScrollNavigation();
+      return;
+    }
+
+    event.preventDefault();
+    if (direction !== scrollNavigationDirection) {
+      scrollNavigationTotal = 0;
+      scrollNavigationDirection = direction;
+    }
+
+    scrollNavigationTotal += Math.abs(event.deltaY);
+    window.clearTimeout(scrollNavigationResetTimer);
+    scrollNavigationResetTimer = window.setTimeout(resetScrollNavigation, 240);
+
+    if (scrollNavigationTotal >= SCROLL_NAV_THRESHOLD) {
+      resetScrollNavigation();
+      navigateToPage(currentPage === "home" ? "About" : "Home", direction > 0 ? "down" : "up");
+    }
+  }
+
+  function handleTouchStart(event) {
+    touchStartY = event.touches[0]?.clientY ?? null;
+  }
+
+  function handleTouchEnd(event) {
+    if (touchStartY === null || pageNavigationLocked) return;
+    const touchEndY = event.changedTouches[0]?.clientY ?? touchStartY;
+    const distance = touchStartY - touchEndY;
+    touchStartY = null;
+
+    if (currentPage === "home" && distance >= 60) {
+      navigateToPage("About", "down");
+    } else if (currentPage === "about" && distance <= -60) {
+      navigateToPage("Home", "up");
+    }
   }
 
   function clearDockIdleTimer() {
@@ -202,9 +263,10 @@
         if (!elements.dock.matches(":focus-within")) scheduleDockAutoCollapse();
       });
     });
-    window.addEventListener("scroll", handlePageScroll, { passive: true });
-    window.addEventListener("wheel", revealDockMinimize, { passive: true });
+    window.addEventListener("wheel", handlePageWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", revealDockMinimize, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
     setDockMinimized(false, false);
     syncDockWithPage();
   }
@@ -393,8 +455,8 @@
       return;
     }
 
-    applyHeroMedia(items);
-    applyAboutMedia(items);
+    if (elements.background && elements.portraitCard) applyHeroMedia(items);
+    if (elements.aboutBackground && elements.aboutPhoto) applyAboutMedia(items);
     document.documentElement.dataset.mediaStatus = "ready";
   }
 

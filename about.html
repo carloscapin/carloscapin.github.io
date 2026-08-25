@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="Carlos Capin — graphic artist and marketing management creative portfolio."
+      content="About Carlos Capin — marketing management graduate and visual artist."
     >
-    <meta name="theme-color" content="#0d0e0d">
-    <title>Carlos Capin — Graphic Artist</title>
+    <meta name="theme-color" content="#10120f">
+    <title>About Carlos Capin</title>
     <link rel="preconnect" href="https://drive.google.com">
     <link rel="preconnect" href="https://lh3.googleusercontent.com">
     <link
@@ -29,69 +29,58 @@
     <script src="static/js/drive-config.js" defer></script>
     <script src="static/js/app.js" defer></script>
   </head>
-  <body data-page="home">
+  <body data-page="about">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="masthead" aria-label="Portfolio heading">
-      <p class="masthead__brand">Visual artist</p>
-      <p class="masthead__statement">Creative works &amp; visual journey</p>
-      <p class="masthead__year" data-current-year>2026</p>
-    </header>
-
     <main id="main-content">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="hero__art" aria-hidden="true">
-          <div class="hero__drive-background" id="hero-background"></div>
-          <div class="hero__grain"></div>
-          <div class="hero__arch hero__arch--one"></div>
-          <div class="hero__arch hero__arch--two"></div>
-          <div class="hero__shadow"></div>
+      <section class="about" id="about" aria-labelledby="about-title">
+        <div class="about__art" aria-hidden="true">
+          <div class="about__drive-background" id="about-background"></div>
+          <div class="about__veil"></div>
+          <div class="about__grain"></div>
         </div>
 
-        <div class="hero__copy">
-          <h1 class="hero__title" id="hero-title">
-            <span>Graphic</span>
-            <span>Artist</span>
-          </h1>
-          <p class="hero__discipline">Marketing Management</p>
-        </div>
+        <h1 class="about__title" id="about-title">About Me</h1>
 
-        <figure class="portrait-card is-portrait-loading" id="portrait-card">
-          <span class="portrait-card__tape" aria-hidden="true"></span>
-          <div class="portrait-card__swing">
-            <div class="portrait-card__media">
-              <img id="hero-portrait" alt="Portrait of Carlos Capin" hidden>
-              <div class="portrait-card__placeholder" id="portrait-placeholder" aria-hidden="true"></div>
-            </div>
-            <img class="portrait-card__frame" id="portrait-frame" alt="" aria-hidden="true" hidden>
-            <figcaption>
-              <span class="portrait-card__name">Carlos Capin</span>
-              <span class="portrait-card__label">Artist Portfolio</span>
-            </figcaption>
+        <figure class="about-photo is-loading" id="about-photo">
+          <span class="about-photo__tape" aria-hidden="true"></span>
+          <div class="about-photo__media">
+            <img id="about-portrait" alt="Carlos Capin" hidden>
+            <div class="about-photo__placeholder" id="about-placeholder" aria-hidden="true"></div>
           </div>
-          <img class="portrait-card__drive-tape" id="portrait-tape" alt="" aria-hidden="true" hidden>
+          <figcaption>Capin Carlos Miguel C.</figcaption>
         </figure>
 
-        <svg
-          class="hero__folder"
-          viewBox="0 0 464 160"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M0 0H66Q73 0 79 7L151 86Q158 94 169 94H447Q464 94 464 111V160H0Z" />
-        </svg>
-      </section>
+        <div class="about__folders" aria-label="Carlos Capin highlights">
+          <article class="folder-card folder-card--experience" tabindex="0">
+            <div class="folder-card__content">
+              <p class="folder-card__headline">6 months of creative experience</p>
+              <p class="folder-card__action"><span aria-hidden="true">&bull;</span> Click<br><span aria-hidden="true">&bull;</span> Resume</p>
+            </div>
+          </article>
 
+          <article class="folder-card folder-card--specialty" tabindex="0">
+            <div class="folder-card__content">
+              <p class="folder-card__headline">Specialized in marketing poster &amp; video editing</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="about__bio">
+          <strong>Driven and enthusiastic Business Administration graduate, Majoring in Marketing Management, seeking a full-time opportunity to apply and expand my skills in a dynamic environment. Possesses a solid foundation in core marketing principles and a readiness to support business objectives with fresh perspectives, dedication, and adaptability. Recognized for a strong work ethic, rapid learning agility, and a commitment to delivering Impactful results.</strong>
+        </p>
+
+        <span class="about__page-number" aria-hidden="true">(02)</span>
+      </section>
     </main>
 
     <nav class="icon-dock" id="icon-dock" aria-label="Portfolio navigation">
       <div class="icon-dock__items">
-        <button class="icon-dock__item" type="button" data-dock-view="Home" aria-label="Home" aria-pressed="true">
+        <button class="icon-dock__item" type="button" data-dock-view="Home" aria-label="Home" aria-pressed="false">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10.5 8.5-7 8.5 7M5.5 9v11h13V9M9.5 20v-6h5v6"/></svg>
           <span>Home</span>
         </button>
-        <button class="icon-dock__item" type="button" data-dock-view="About" aria-label="About" aria-pressed="false">
+        <button class="icon-dock__item" type="button" data-dock-view="About" aria-label="About" aria-pressed="true">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M5.5 21c.4-5.1 2.6-7.7 6.5-7.7s6.1 2.6 6.5 7.7"/></svg>
           <span>About</span>
         </button>
@@ -138,10 +127,10 @@
     >
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 12h14M5 16h14"/></svg>
     </button>
-    <p class="visually-hidden" id="icon-dock-status" aria-live="polite">Home selected</p>
+    <p class="visually-hidden" id="icon-dock-status" aria-live="polite">About selected</p>
 
     <noscript>
-      <p class="noscript-note">Please enable JavaScript to load Carlos&rsquo; Drive-powered hero media.</p>
+      <p class="noscript-note">Please enable JavaScript to load Carlos&rsquo; Drive-powered About media.</p>
     </noscript>
   </body>
 </html>
