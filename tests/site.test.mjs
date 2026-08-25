@@ -80,9 +80,15 @@ test("Apps Script creates the required Drive structure and returns JSONP", async
 });
 
 test("landing remains edge-to-edge and responsive", async () => {
-  const css = await read("static/css/main.css");
+  const [html, css] = await Promise.all([read("index.html"), read("static/css/main.css")]);
   assert.match(css, /height:\s*100svh/);
   assert.match(css, /overflow-x:\s*hidden/);
+  assert.match(html, /class="hero__folder"/);
+  assert.doesNotMatch(html, /class="hero__folio"/);
+  assert.match(css, /\.hero__folder::before[\s\S]*clip-path:/);
+  assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
+  assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
+  assert.match(css, /\.portrait-card__script\s*\{[\s\S]*font-family:\s*var\(--script\)/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /prefers-reduced-motion/);
 });
