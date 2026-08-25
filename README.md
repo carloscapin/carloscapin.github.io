@@ -1,6 +1,6 @@
 # Carlos Capin Portfolio
 
-A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive. The hero preserves the full Drive background composition, a compact Polaroid scale, reference-matched Bodoni/handwritten typography, and the lower-left office-folder silhouette.
+A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive. The hero preserves the full Drive background composition, a compact Polaroid scale, a less-cropped portrait treatment, reference-matched Didot/handwritten typography, and the lower-left office-folder silhouette.
 
 A fixed lower-center icon dock previews the future portfolio navigation. Its six transparent buttons change icon color only on hover or selection, with compact pointed tooltips and no separators. The dock automatically collapses after six seconds without interaction. Its manual minimize control appears only after a scroll gesture, while the compact restore control uses a periodic sideways, tilted shake.
 

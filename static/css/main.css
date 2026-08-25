@@ -232,29 +232,6 @@ img {
   transform-origin: center;
 }
 
-.portrait-card::before,
-.portrait-card::after {
-  position: absolute;
-  right: -0.5rem;
-  bottom: -0.55rem;
-  left: 0.35rem;
-  z-index: -1;
-  height: 1.2rem;
-  background: #d8d8cf;
-  content: "";
-  clip-path: polygon(0 12%, 7% 52%, 14% 14%, 23% 59%, 31% 17%, 43% 62%, 53% 19%, 65% 60%, 76% 18%, 88% 53%, 100% 9%, 100% 100%, 0 100%);
-}
-
-.portrait-card::after {
-  top: 0.5rem;
-  right: -0.65rem;
-  bottom: 0;
-  left: auto;
-  width: 1.1rem;
-  height: auto;
-  clip-path: polygon(0 0, 100% 0, 66% 9%, 100% 17%, 61% 25%, 100% 34%, 60% 43%, 100% 53%, 64% 63%, 100% 72%, 60% 82%, 100% 91%, 74% 100%, 0 100%);
-}
-
 .portrait-card__tape {
   position: absolute;
   z-index: 4;
@@ -283,7 +260,12 @@ img {
   height: 100%;
 }
 
-.portrait-card__media > img,
+.portrait-card__media > img {
+  object-fit: contain;
+  object-position: center;
+  scale: 1.22;
+}
+
 .portrait-card__placeholder img {
   object-fit: cover;
 }
