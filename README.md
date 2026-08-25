@@ -51,6 +51,10 @@ The project is linked locally through `.clasp.json`. In VS Code, use **Run and D
 
 No Google API key or OAuth secret is committed to the website. The `/exec` endpoint exposes only metadata for files within Carlos' configured portfolio folder.
 
+## Local typography
+
+The hero title self-hosts [Bodoni Moda](https://github.com/google/fonts/tree/main/ofl/bodonimoda), an open-licensed Didone display replacement chosen to match the supplied serif reference. `Marketing Management` self-hosts [Open Sauce Sans SemiBold](https://github.com/marcologous/Open-Sauce-Fonts). Both font files and their SIL Open Font License texts live under `static/media/fonts`; the published page does not depend on a font CDN.
+
 ## Local verification
 
 ```powershell

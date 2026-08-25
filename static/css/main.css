@@ -1,9 +1,25 @@
+@font-face {
+  font-family: "Bodoni Moda Display";
+  src: url("../media/fonts/BodoniModa-Variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Sauce Sans";
+  src: url("../media/fonts/OpenSauceSans-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   --ink: #111310;
   --paper: #f0eee5;
   --acid: #d7f65b;
-  --serif: Didot, "Bodoni MT", "Times New Roman", serif;
+  --serif: "Bodoni Moda Display", Didot, "Bodoni MT", "Times New Roman", serif;
   --sans: "Arial Narrow", Arial, sans-serif;
   --script: "Segoe Print", "Bradley Hand", cursive;
 }
@@ -188,6 +204,7 @@ img {
   font-family: var(--serif);
   font-size: clamp(4.6rem, 10vw, 11.3rem);
   font-weight: 400;
+  font-optical-sizing: auto;
   letter-spacing: -0.085em;
   line-height: 0.7;
   text-transform: uppercase;
@@ -211,8 +228,9 @@ img {
 .hero__discipline {
   margin: clamp(1.35rem, 3.2vh, 2.6rem) 0 0;
   padding-left: 15%;
+  font-family: "Open Sauce Sans", "Arial Narrow", Arial, sans-serif;
   font-size: clamp(0.78rem, 1.25vw, 1.2rem);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.045em;
   text-transform: uppercase;
 }

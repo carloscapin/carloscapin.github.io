@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
@@ -18,6 +18,27 @@ test("GitHub Pages uses only relative local site assets", async () => {
   assert.match(html, /static\/js\/drive-config\.js/);
   assert.match(html, /static\/js\/app\.js/);
   assert.doesNotMatch(html, /(?:src|href)=["'](?:[A-Za-z]:\\|\/Users\/)/);
+});
+
+test("hero typography self-hosts the display and discipline fonts", async () => {
+  const [html, css, bodoni, openSauce, bodoniLicense, openSauceLicense] = await Promise.all([
+    read("index.html"),
+    read("static/css/main.css"),
+    stat(new URL("../static/media/fonts/BodoniModa-Variable.ttf", import.meta.url)),
+    stat(new URL("../static/media/fonts/OpenSauceSans-SemiBold.ttf", import.meta.url)),
+    read("static/media/fonts/OFL-BodoniModa.txt"),
+    read("static/media/fonts/OFL-OpenSauceSans.txt"),
+  ]);
+  assert.match(html, /static\/media\/fonts\/BodoniModa-Variable\.ttf/);
+  assert.match(html, /static\/media\/fonts\/OpenSauceSans-SemiBold\.ttf/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Bodoni Moda Display"[\s\S]*BodoniModa-Variable\.ttf/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Open Sauce Sans"[\s\S]*OpenSauceSans-SemiBold\.ttf/);
+  assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)[\s\S]*font-optical-sizing:\s*auto/);
+  assert.match(css, /\.hero__discipline\s*\{[\s\S]*font-family:\s*"Open Sauce Sans"[\s\S]*font-weight:\s*600/);
+  assert.ok(bodoni.size > 100000);
+  assert.ok(openSauce.size > 30000);
+  assert.match(bodoniLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
+  assert.match(openSauceLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
 });
 
 test("Drive configuration points to Carlos' supplied folder", async () => {
