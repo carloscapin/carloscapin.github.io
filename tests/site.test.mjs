@@ -118,6 +118,9 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(css, /\.hero__folder path\s*\{[\s\S]*fill:\s*#fbfbfa/);
   assert.doesNotMatch(css, /\.hero__folder::before|\.hero__folder[\s\S]*clip-path:\s*polygon/);
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
+  assert.match(css, /\.hero__copy\s*\{[\s\S]*right:\s*calc\(45% \+ clamp\(0\.65rem, 1vw, 1\.25rem\)\)[\s\S]*left:\s*auto/);
+  assert.match(css, /\.portrait-card\s*\{[\s\S]*right:\s*auto[\s\S]*left:\s*calc\(55% \+ clamp\(0\.65rem, 1vw, 1\.25rem\)\)/);
+  assert.match(css, /@media \(max-width: 960px\)[\s\S]*\.hero__copy\s*\{[\s\S]*right:\s*auto[\s\S]*left:\s*clamp\(1\.25rem, 2vw, 2\.4rem\)/);
   assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
   assert.match(html, /class="portrait-card__name">Carlos Capin<\/span>\s*<span class="portrait-card__label">Artist Portfolio/);
   assert.match(css, /\.portrait-card__name\s*\{[\s\S]*font-family:\s*var\(--script\)/);

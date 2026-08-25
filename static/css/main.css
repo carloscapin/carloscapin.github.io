@@ -197,7 +197,8 @@ img {
   position: absolute;
   z-index: 6;
   top: min(45%, 20.5rem);
-  left: clamp(1.25rem, 2vw, 2.4rem);
+  right: calc(45% + clamp(0.65rem, 1vw, 1.25rem));
+  left: auto;
   width: min(45vw, 49rem);
   translate: 0 -45%;
 }
@@ -243,7 +244,8 @@ img {
   position: absolute;
   z-index: 5;
   top: clamp(6rem, 12vh, 8rem);
-  right: clamp(2.2rem, 7vw, 8rem);
+  right: auto;
+  left: calc(55% + clamp(0.65rem, 1vw, 1.25rem));
   width: clamp(19rem, 35vw, 37rem);
   margin: 0;
   padding: clamp(0.9rem, 1.35vw, 1.45rem) clamp(0.9rem, 1.35vw, 1.45rem) clamp(1rem, 1.8vw, 2rem);
@@ -646,6 +648,8 @@ img {
 @media (max-width: 960px) {
   .hero__copy {
     top: min(46%, 20rem);
+    right: auto;
+    left: clamp(1.25rem, 2vw, 2.4rem);
     width: 46vw;
     translate: 0 -44%;
   }
@@ -668,6 +672,7 @@ img {
   .portrait-card {
     top: clamp(5rem, 10vh, 6.5rem);
     right: 2.5%;
+    left: auto;
     bottom: auto;
     width: min(47vw, 24rem);
   }
@@ -750,6 +755,7 @@ img {
   .portrait-card {
     top: 6rem;
     right: 5%;
+    left: auto;
     bottom: auto;
     width: min(35vw, 34rem);
   }
