@@ -200,18 +200,32 @@
     elements.portraitCard.classList.remove(stateClass);
   }
 
-  function applyPortraitDecoration(descriptor, element, stateClass) {
-    if (!descriptor) {
-      clearPortraitDecoration(element, stateClass);
-      return;
-    }
+  function applyPortraitDecoration(descriptor, element, stateClass, generation) {
+    return new Promise((resolve) => {
+      if (!descriptor) {
+        clearPortraitDecoration(element, stateClass);
+        resolve(false);
+        return;
+      }
 
-    element.onload = () => {
-      element.hidden = false;
-      elements.portraitCard.classList.add(stateClass);
-    };
-    element.onerror = () => clearPortraitDecoration(element, stateClass);
-    element.src = descriptor.url;
+      element.onload = () => {
+        if (generation !== heroMediaGeneration) {
+          resolve(false);
+          return;
+        }
+
+        element.hidden = false;
+        elements.portraitCard.classList.add(stateClass);
+        resolve(true);
+      };
+      element.onerror = () => {
+        if (generation === heroMediaGeneration) {
+          clearPortraitDecoration(element, stateClass);
+        }
+        resolve(false);
+      };
+      element.src = descriptor.url;
+    });
   }
 
   async function applyPortraitDecorations(items, portrait, generation) {
@@ -224,12 +238,37 @@
           belongsTo(item, "landing", "tape"))
     );
     const inspected = (await Promise.all(candidates.map(inspectDecoration))).filter(Boolean);
-    if (generation !== heroMediaGeneration) return;
+    if (generation !== heroMediaGeneration) return false;
 
     const frame = inspected.filter((item) => item.role === "frame").sort(newestMediaSort)[0];
     const tape = inspected.filter((item) => item.role === "tape").sort(newestMediaSort)[0];
-    applyPortraitDecoration(frame, elements.portraitFrame, "is-drive-framed");
-    applyPortraitDecoration(tape, elements.portraitTape, "has-drive-tape");
+    const [frameLoaded] = await Promise.all([
+      applyPortraitDecoration(frame, elements.portraitFrame, "is-drive-framed", generation),
+      applyPortraitDecoration(tape, elements.portraitTape, "has-drive-tape", generation),
+    ]);
+    return frameLoaded;
+  }
+
+  function loadPortrait(portrait, generation) {
+    elements.portrait.hidden = true;
+    elements.portraitPlaceholder.hidden = false;
+    elements.portraitCard.classList.add("is-portrait-loading");
+
+    if (!portrait) {
+      clearPortrait();
+      return Promise.resolve(false);
+    }
+
+    return new Promise((resolve) => {
+      elements.portrait.onload = () => resolve(generation === heroMediaGeneration);
+      elements.portrait.onerror = () => {
+        if (generation === heroMediaGeneration) {
+          clearPortrait();
+        }
+        resolve(false);
+      };
+      elements.portrait.src = driveThumbnail(portrait, "w1400");
+    });
   }
 
   function applyHeroMedia(items) {
@@ -254,22 +293,16 @@
       clearBackground();
     }
 
-    if (portrait) {
-      elements.portrait.hidden = true;
-      elements.portraitPlaceholder.hidden = false;
-      elements.portraitCard.classList.add("is-portrait-loading");
-      elements.portrait.onload = () => {
+    const portraitReady = loadPortrait(portrait, generation);
+    const decorationsReady = applyPortraitDecorations(items, portrait, generation);
+
+    Promise.all([portraitReady, decorationsReady]).then(([portraitLoaded]) => {
+      if (generation === heroMediaGeneration && portraitLoaded) {
         elements.portrait.hidden = false;
         elements.portraitPlaceholder.hidden = true;
         elements.portraitCard.classList.remove("is-portrait-loading");
-      };
-      elements.portrait.onerror = clearPortrait;
-      elements.portrait.src = driveThumbnail(portrait, "w1400");
-    } else {
-      clearPortrait();
-    }
-
-    applyPortraitDecorations(items, portrait, generation);
+      }
+    });
   }
 
   function applyCatalog(payload) {

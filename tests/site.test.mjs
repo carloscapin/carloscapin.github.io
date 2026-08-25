@@ -101,8 +101,9 @@ test("Drive catalog is limited to automatic hero media", async () => {
   assert.match(css, /\.portrait-card__placeholder::after\s*\{[\s\S]*border-radius:\s*50%[\s\S]*radial-gradient/);
   assert.match(css, /\.portrait-card\.is-portrait-loading\s*\{[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/);
   assert.match(css, /\.portrait-card\.is-portrait-loading \.portrait-card__frame,[\s\S]*\.portrait-card\.is-portrait-loading figcaption\s*\{\s*display:\s*none !important/);
-  assert.match(app, /elements\.portrait\.hidden = true;\s*elements\.portraitPlaceholder\.hidden = false;\s*elements\.portraitCard\.classList\.add\("is-portrait-loading"\);[\s\S]*elements\.portrait\.onload/);
-  assert.match(app, /elements\.portraitPlaceholder\.hidden = true;\s*elements\.portraitCard\.classList\.remove\("is-portrait-loading"\)/);
+  assert.match(app, /function loadPortrait\(portrait, generation\)[\s\S]*elements\.portrait\.hidden = true;[\s\S]*elements\.portraitCard\.classList\.add\("is-portrait-loading"\)/);
+  assert.match(app, /const portraitReady = loadPortrait\(portrait, generation\);\s*const decorationsReady = applyPortraitDecorations\(items, portrait, generation\);/);
+  assert.match(app, /Promise\.all\(\[portraitReady, decorationsReady\]\)\.then\(\(\[portraitLoaded\]\) => \{[\s\S]*elements\.portrait\.hidden = false;[\s\S]*classList\.remove\("is-portrait-loading"\)/);
   assert.match(app, /setInterval\(loadDriveCatalog/);
   assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });
