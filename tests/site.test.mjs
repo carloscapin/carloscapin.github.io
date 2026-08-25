@@ -84,9 +84,10 @@ test("landing remains edge-to-edge and responsive", async () => {
   const [html, css] = await Promise.all([read("index.html"), read("static/css/main.css")]);
   assert.match(css, /height:\s*100svh/);
   assert.match(css, /overflow-x:\s*hidden/);
-  assert.match(html, /class="hero__folder"/);
+  assert.match(html, /<svg[\s\S]*class="hero__folder"[\s\S]*<path d="[^"]*Q[^"]*"/);
   assert.doesNotMatch(html, /class="hero__folio"/);
-  assert.match(css, /\.hero__folder::before[\s\S]*clip-path:/);
+  assert.match(css, /\.hero__folder path\s*\{[\s\S]*fill:\s*#fbfbfa/);
+  assert.doesNotMatch(css, /\.hero__folder::before|\.hero__folder[\s\S]*clip-path:\s*polygon/);
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
   assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
   assert.match(html, /class="portrait-card__name">Carlos Capin<\/span>\s*<span class="portrait-card__label">Artist Portfolio/);
