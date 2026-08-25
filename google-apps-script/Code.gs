@@ -38,6 +38,8 @@ function setupCarlosPortfolio() {
   const requiredPaths = [
     ["01-landing", "01-background"],
     ["01-landing", "02-portrait"],
+    ["01-landing", "03-frame"],
+    ["01-landing", "04-tape"],
     ["02-portfolio", "01-graphic-design"],
     ["02-portfolio", "02-marketing-campaigns"],
     ["02-portfolio", "03-visual-storytelling"],
@@ -87,6 +89,8 @@ function organizeExistingAssets_(root) {
   const assets = [
     { id: "1JBHRzVsCl3ZO0WijZ7jTMZGDD3mQyJwG", path: ["01-landing", "01-background"], name: "01-gallery-background.jpg" },
     { id: "1ejIQOSNcf_Svpu4magaa8bXtYNKmEWmQ", path: ["01-landing", "02-portrait"], name: "01-carlos-portrait.jpg" },
+    { id: "1keZtOdiX5Vi-ccnnQQPWX9_iMmUBx-WH", path: ["01-landing", "03-frame"], name: "01-polaroid-frame.png" },
+    { id: "1Ml_7JhZgiEQcO0sXqKEshV3hh3FVjXyN", path: ["01-landing", "04-tape"], name: "01-portrait-tape.png" },
     { id: "1rdKlAqzUt6KzYAii_1u8_b6q6N9piNhC", path: ["02-portfolio", "01-graphic-design"], name: "01-avantech-uniform-layout.jpg" },
     { id: "1KNWDPwFehlZ6l26UGIVLGE7QqXQPu9nF", path: ["02-portfolio", "02-marketing-campaigns"], name: "01-ninoy-aquino-day-advisory.png" },
     { id: "1B7SxHcplPbzTtYdl8knnTafm1zyK42qg", path: ["02-portfolio", "02-marketing-campaigns"], name: "02-energy-solutions-campaign.jpg" },

@@ -4,8 +4,11 @@
   const config = window.CARLOS_PORTFOLIO_CONFIG || {};
   const elements = {
     background: document.querySelector("#hero-background"),
+    portraitCard: document.querySelector("#portrait-card"),
     portrait: document.querySelector("#hero-portrait"),
     portraitPlaceholder: document.querySelector("#portrait-placeholder"),
+    portraitFrame: document.querySelector("#portrait-frame"),
+    portraitTape: document.querySelector("#portrait-tape"),
     dock: document.querySelector("#icon-dock"),
     dockItems: [...document.querySelectorAll(".icon-dock__item")],
     dockMinimize: document.querySelector("#icon-dock-minimize"),
@@ -14,6 +17,7 @@
   };
   const DOCK_IDLE_MS = 6000;
   let dockIdleTimer = 0;
+  let heroMediaGeneration = 0;
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
   const slug = (value = "") =>
@@ -46,6 +50,38 @@
     item.thumbnailUrl ||
     item.thumbnail_url ||
     `https://drive.google.com/thumbnail?id=${encodeURIComponent(item.id)}&sz=${size}&v=${versionToken(item)}`;
+
+  const newestMediaSort = (left, right) => {
+    const leftTime = Date.parse(left.item.modifiedTime || left.item.modified_time || 0) || 0;
+    const rightTime = Date.parse(right.item.modifiedTime || right.item.modified_time || 0) || 0;
+    return rightTime - leftTime || mediaSort(left.item, right.item);
+  };
+
+  const explicitDecorationRole = (item) => {
+    const itemName = slug(item.name || item.title || "");
+    if (belongsTo(item, "landing", "frame") || /(?:^|-)(?:frame|polaroid)(?:-|$)/.test(itemName)) {
+      return "frame";
+    }
+    if (belongsTo(item, "landing", "tape") || /(?:^|-)tape(?:-|$)/.test(itemName)) {
+      return "tape";
+    }
+    return "";
+  };
+
+  const inspectDecoration = (item) =>
+    new Promise((resolve) => {
+      const url = driveThumbnail(item, "w1800");
+      const image = new Image();
+      const explicitRole = explicitDecorationRole(item);
+
+      image.onload = () => {
+        const aspectRatio = image.naturalWidth / image.naturalHeight;
+        const role = explicitRole || (aspectRatio >= 1.6 ? "tape" : aspectRatio <= 1.35 ? "frame" : "");
+        resolve(role ? { item, role, url } : null);
+      };
+      image.onerror = () => resolve(explicitRole ? { item, role: explicitRole, url } : null);
+      image.src = url;
+    });
 
   function setCurrentYear() {
     const currentYear = String(new Date().getFullYear());
@@ -157,7 +193,46 @@
     elements.portraitPlaceholder.hidden = false;
   }
 
+  function clearPortraitDecoration(element, stateClass) {
+    element.hidden = true;
+    element.removeAttribute("src");
+    elements.portraitCard.classList.remove(stateClass);
+  }
+
+  function applyPortraitDecoration(descriptor, element, stateClass) {
+    if (!descriptor) {
+      clearPortraitDecoration(element, stateClass);
+      return;
+    }
+
+    element.onload = () => {
+      element.hidden = false;
+      elements.portraitCard.classList.add(stateClass);
+    };
+    element.onerror = () => clearPortraitDecoration(element, stateClass);
+    element.src = descriptor.url;
+  }
+
+  async function applyPortraitDecorations(items, portrait, generation) {
+    const candidates = items.filter(
+      (item) =>
+        isImage(item) &&
+        item.id !== portrait?.id &&
+        (belongsTo(item, "landing", "portrait") ||
+          belongsTo(item, "landing", "frame") ||
+          belongsTo(item, "landing", "tape"))
+    );
+    const inspected = (await Promise.all(candidates.map(inspectDecoration))).filter(Boolean);
+    if (generation !== heroMediaGeneration) return;
+
+    const frame = inspected.filter((item) => item.role === "frame").sort(newestMediaSort)[0];
+    const tape = inspected.filter((item) => item.role === "tape").sort(newestMediaSort)[0];
+    applyPortraitDecoration(frame, elements.portraitFrame, "is-drive-framed");
+    applyPortraitDecoration(tape, elements.portraitTape, "has-drive-tape");
+  }
+
   function applyHeroMedia(items) {
+    const generation = ++heroMediaGeneration;
     const background = items
       .filter((item) => isImage(item) && belongsTo(item, "landing", "background"))
       .sort(mediaSort)[0];
@@ -188,6 +263,8 @@
     } else {
       clearPortrait();
     }
+
+    applyPortraitDecorations(items, portrait, generation);
   }
 
   function applyCatalog(payload) {

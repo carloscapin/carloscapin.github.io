@@ -6,13 +6,15 @@ A fixed lower-center icon dock previews the future portfolio navigation. Its six
 
 ## Media folders
 
-`setupCarlosPortfolio()` has already created this structure inside the supplied Drive folder:
+`setupCarlosPortfolio()` defines and maintains this structure inside the supplied Drive folder:
 
 ```text
 Carlos media root
 |-- 01-landing
 |   |-- 01-background       # first image becomes the landing backdrop
-|   `-- 02-portrait         # first image becomes Carlos' Polaroid portrait
+|   |-- 02-portrait         # first image becomes Carlos' portrait
+|   |-- 03-frame            # transparent Polaroid frame (optional)
+|   `-- 04-tape             # transparent tape overlay (optional)
 `-- 02-portfolio
     |-- 01-graphic-design
     |-- 02-marketing-campaigns
@@ -31,6 +33,8 @@ Hero media updates happen only in Drive:
 - Replace a file or upload a new version to update it.
 - Keep the active backdrop in `01-landing/01-background`.
 - Keep the active Carlos portrait in `01-landing/02-portrait`.
+- Keep the transparent Polaroid frame in `01-landing/03-frame` and its tape in `01-landing/04-tape` when Drive write access is available.
+- The current shared folder keeps the supplied frame and tape beside the portrait; the page recognizes them automatically by their tall-frame and wide-tape proportions.
 
 The page checks for changes every five minutes. The Apps Script catalog has a one-minute cache.
 

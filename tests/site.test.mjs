@@ -64,9 +64,14 @@ test("bottom icon dock auto-collapses and keeps its controls visually clean", as
 });
 
 test("Drive catalog is limited to automatic hero media", async () => {
-  const app = await read("static/js/app.js");
+  const [html, app] = await Promise.all([read("index.html"), read("static/js/app.js")]);
+  assert.match(html, /id="portrait-frame"/);
+  assert.match(html, /id="portrait-tape"/);
   assert.match(app, /belongsTo\(item, "landing", "background"\)/);
   assert.match(app, /belongsTo\(item, "landing", "portrait"\)/);
+  assert.match(app, /belongsTo\(item, "landing", "frame"\)/);
+  assert.match(app, /belongsTo\(item, "landing", "tape"\)/);
+  assert.match(app, /aspectRatio >= 1\.6 \? "tape" : aspectRatio <= 1\.35 \? "frame"/);
   assert.match(app, /setInterval\(loadDriveCatalog/);
   assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });
@@ -75,6 +80,8 @@ test("Apps Script creates the required Drive structure and returns JSONP", async
   const script = await read("google-apps-script/Code.gs");
   assert.match(script, /setupCarlosPortfolio/);
   assert.match(script, /01-landing/);
+  assert.match(script, /03-frame/);
+  assert.match(script, /04-tape/);
   assert.match(script, /02-portfolio/);
   assert.match(script, /ANYONE_WITH_LINK/);
   assert.match(script, /callback \? `\$\{callback\}\(\$\{serialized\}\);`/);
@@ -93,6 +100,8 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(html, /class="portrait-card__name">Carlos Capin<\/span>\s*<span class="portrait-card__label">Artist Portfolio/);
   assert.match(css, /\.portrait-card__name\s*\{[\s\S]*font-family:\s*var\(--script\)/);
   assert.match(css, /\.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*contain[\s\S]*scale:\s*1\.08/);
+  assert.match(css, /\.portrait-card\.is-drive-framed\s*\{[\s\S]*aspect-ratio:\s*1150 \/ 1368/);
+  assert.match(css, /\.portrait-card__drive-tape\s*\{[\s\S]*width:\s*32%/);
   assert.doesNotMatch(css, /\.portrait-card::before|\.portrait-card::after/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /prefers-reduced-motion/);
