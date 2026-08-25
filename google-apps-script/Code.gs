@@ -137,6 +137,78 @@ function clearCatalogCache() {
   return { ok: true, message: "Catalog cache cleared." };
 }
 
+/**
+ * Non-destructive emergency recovery for the original Carlos media set.
+ *
+ * The organizer moved the originals into working subfolders; it did not trash
+ * them. This creates one clearly marked copy of every known asset in the media
+ * root so the pre-organization root view is restored without moving or deleting
+ * the files that currently power the website. The marker makes retries safe.
+ */
+function recoverCarlosAssetsToRoot() {
+  const root = DriveApp.getFolderById(ROOT_FOLDER_ID);
+  const assetIds = [
+    "1JBHRzVsCl3ZO0WijZ7jTMZGDD3mQyJwG",
+    "1ejIQOSNcf_Svpu4magaa8bXtYNKmEWmQ",
+    "1keZtOdiX5Vi-ccnnQQPWX9_iMmUBx-WH",
+    "1Ml_7JhZgiEQcO0sXqKEshV3hh3FVjXyN",
+    "1rdKlAqzUt6KzYAii_1u8_b6q6N9piNhC",
+    "1KNWDPwFehlZ6l26UGIVLGE7QqXQPu9nF",
+    "1B7SxHcplPbzTtYdl8knnTafm1zyK42qg",
+    "1i1fqJLmePflhgB1FljRhPVngz_XXSsp-",
+    "1zbMG_X8WOAZ4DZTIHFYwvQmoayyrK8Vs",
+    "1KXoOjFW-ZGtWMnCN-zE3FFJT8xnDn3o9",
+    "1Z4BK07fgznJ07BxKejQBts1-o0MeUBm3",
+    "1Rw4a11q2PhXMAATvhJE28FtpVB4U8gF4",
+    "1r2q6UETtnpxupXDS-9Ob_pN1Eq8FKYE7",
+    "1yZFRCK_NQcOu-AGM1fOngpmov4lEJypd",
+    "1CZ_SOznD85iIt7T59fvy0qTRpGF5F_r6",
+    "1FqiIophPdDigfOWHZSOjCDyq8egpASZp",
+    "1IchqXqwA91YmrZG36Zjigz8KXEHVQAx7",
+    "1JMvzaR04MvzgipI18MDBNwXcL8ahiUUd",
+    "1Qvg71CDzR-6sdxHNKTm3n_-eyHiYBlqP",
+    "1Sqd5WyhUCSK5H7qQO8vyrrhsEMW46hFu",
+    "1VXC2nR4QWR-CYDT1QvlDwI5lPDnM7KGX",
+    "1aawRGHdWDH01Qzeh-xqH1AgxOXgjdChV",
+    "1hPVqtoNEgf_yHXk_KOMNUNGlQQIsoVHK",
+    "1uRlfv-Uio1Ktc7Whfdg9lpHIeh8YBlSJ",
+    "1qcxI_gbuNRNLLBKR_oogiXn2c04_VcLN",
+  ];
+  const markerPrefix = "CARLOS_ROOT_RECOVERY_COPY_OF:";
+  const recoveredSourceIds = {};
+  const rootFiles = root.getFiles();
+
+  while (rootFiles.hasNext()) {
+    const rootFile = rootFiles.next();
+    const description = rootFile.getDescription() || "";
+    if (description.indexOf(markerPrefix) === 0) {
+      recoveredSourceIds[description.slice(markerPrefix.length).split("\n")[0]] = true;
+    }
+  }
+
+  const result = { ok: true, created: [], alreadyRecovered: [], failed: [] };
+  assetIds.forEach((id) => {
+    if (recoveredSourceIds[id]) {
+      result.alreadyRecovered.push(id);
+      return;
+    }
+
+    try {
+      const source = DriveApp.getFileById(id);
+      const copy = source.makeCopy(source.getName(), root);
+      copy.setDescription(`${markerPrefix}${id}\nRecovered without moving the website source file.`);
+      copy.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      result.created.push({ sourceId: id, copyId: copy.getId(), name: copy.getName() });
+    } catch (error) {
+      result.failed.push({ id: id, reason: String(error && error.message ? error.message : error) });
+    }
+  });
+
+  clearCatalogCache_();
+  console.log(JSON.stringify(result, null, 2));
+  return result;
+}
+
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
   const cached = cache.get("carlos-portfolio-catalog-v1");

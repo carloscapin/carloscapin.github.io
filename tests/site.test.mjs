@@ -142,6 +142,9 @@ test("Apps Script creates the required Drive structure and returns JSONP", async
   assert.match(script, /02-portfolio/);
   assert.match(script, /ANYONE_WITH_LINK/);
   assert.match(script, /callback \? `\$\{callback\}\(\$\{serialized\}\);`/);
+  const recoveryFunction = script.match(/function recoverCarlosAssetsToRoot\(\)\s*\{[\s\S]*?\n\}/)?.[0] || "";
+  assert.match(recoveryFunction, /source\.makeCopy\(source\.getName\(\), root\)/);
+  assert.doesNotMatch(recoveryFunction, /\.moveTo\(|\.setTrashed\(/);
 });
 
 test("landing remains edge-to-edge and responsive", async () => {
