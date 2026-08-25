@@ -263,7 +263,7 @@ img {
 .portrait-card__media > img {
   object-fit: contain;
   object-position: center;
-  scale: 1.22;
+  scale: 1.08;
 }
 
 .portrait-card__placeholder img {

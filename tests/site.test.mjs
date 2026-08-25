@@ -89,7 +89,7 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
   assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
   assert.match(css, /\.portrait-card__script\s*\{[\s\S]*font-family:\s*var\(--script\)/);
-  assert.match(css, /\.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*contain[\s\S]*scale:\s*1\.22/);
+  assert.match(css, /\.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*contain[\s\S]*scale:\s*1\.08/);
   assert.doesNotMatch(css, /\.portrait-card::before|\.portrait-card::after/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /prefers-reduced-motion/);
