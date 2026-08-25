@@ -254,6 +254,8 @@
     }
 
     if (portrait) {
+      elements.portrait.hidden = true;
+      elements.portraitPlaceholder.hidden = false;
       elements.portrait.onload = () => {
         elements.portrait.hidden = false;
         elements.portraitPlaceholder.hidden = true;

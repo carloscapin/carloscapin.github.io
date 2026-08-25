@@ -368,8 +368,7 @@ img {
 }
 
 .portrait-card__media > img,
-.portrait-card__placeholder,
-.portrait-card__placeholder img {
+.portrait-card__placeholder {
   width: 100%;
   height: 100%;
 }
@@ -380,8 +379,28 @@ img {
   scale: 1.08;
 }
 
-.portrait-card__placeholder img {
-  object-fit: cover;
+.portrait-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  background: #171917;
+}
+
+.portrait-card__placeholder::after {
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 46% 40%,
+    rgba(221, 218, 204, 0.2) 0%,
+    rgba(91, 94, 86, 0.16) 42%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  box-shadow: 0 1.4rem 3.2rem rgba(0, 0, 0, 0.48);
+  content: "";
+  filter: blur(0.75rem);
 }
 
 .portrait-card figcaption {

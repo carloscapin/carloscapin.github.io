@@ -10,6 +10,8 @@ test("fresh Carlos landing contains the reference hierarchy and identity", async
   assert.match(html, /Graphic[\s\S]*Artist/i);
   assert.match(html, /Marketing Management/i);
   assert.doesNotMatch(html, /Jerome|Jirog/i);
+  assert.match(html, /class="portrait-card__placeholder"[^>]*><\/div>/);
+  assert.doesNotMatch(html, /carlos-portrait-placeholder\.svg/);
 });
 
 test("GitHub Pages uses only relative local site assets", async () => {
@@ -83,7 +85,11 @@ test("bottom icon dock auto-collapses and keeps its controls visually clean", as
 });
 
 test("Drive catalog is limited to automatic hero media", async () => {
-  const [html, app] = await Promise.all([read("index.html"), read("static/js/app.js")]);
+  const [html, css, app] = await Promise.all([
+    read("index.html"),
+    read("static/css/main.css"),
+    read("static/js/app.js"),
+  ]);
   assert.match(html, /id="portrait-frame"/);
   assert.match(html, /id="portrait-tape"/);
   assert.match(app, /belongsTo\(item, "landing", "background"\)/);
@@ -91,6 +97,8 @@ test("Drive catalog is limited to automatic hero media", async () => {
   assert.match(app, /belongsTo\(item, "landing", "frame"\)/);
   assert.match(app, /belongsTo\(item, "landing", "tape"\)/);
   assert.match(app, /aspectRatio >= 1\.6 \? "tape" : aspectRatio <= 1\.35 \? "frame"/);
+  assert.match(css, /\.portrait-card__placeholder::after\s*\{[\s\S]*border-radius:\s*50%[\s\S]*radial-gradient/);
+  assert.match(app, /elements\.portrait\.hidden = true;\s*elements\.portraitPlaceholder\.hidden = false;[\s\S]*elements\.portrait\.onload/);
   assert.match(app, /setInterval\(loadDriveCatalog/);
   assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });
