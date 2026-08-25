@@ -131,6 +131,10 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(css, /\.portrait-card\.is-drive-framed \.portrait-card__media\s*\{[\s\S]*width:\s*86%[\s\S]*height:\s*74%[\s\S]*rotate:\s*-1\.55deg/);
   assert.match(css, /\.portrait-card\.is-drive-framed \.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*cover[\s\S]*object-position:\s*center 18%[\s\S]*scale:\s*1\.03/);
   assert.match(css, /\.portrait-card__drive-tape\s*\{[\s\S]*width:\s*32%/);
+  assert.match(html, /<div class="portrait-card__swing">[\s\S]*id="portrait-frame"[\s\S]*<\/figcaption>\s*<\/div>\s*<img class="portrait-card__drive-tape"/);
+  assert.match(css, /\.portrait-card\.is-drive-framed \.portrait-card__swing\s*\{[\s\S]*transform-origin:\s*50% 3%[\s\S]*animation:\s*portrait-breeze 8\.8s/);
+  assert.match(css, /@keyframes portrait-breeze\s*\{[\s\S]*rotateY\([^)]+\)[\s\S]*rotateZ\([^)]+\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.portrait-card\.is-drive-framed \.portrait-card__swing\s*\{[\s\S]*animation:\s*none !important/);
   assert.doesNotMatch(css, /\.portrait-card::before|\.portrait-card::after/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /prefers-reduced-motion/);

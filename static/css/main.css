@@ -296,6 +296,21 @@ img {
   display: none;
 }
 
+.portrait-card__swing {
+  display: contents;
+}
+
+.portrait-card.is-drive-framed .portrait-card__swing {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-origin: 50% 3%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: portrait-breeze 8.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+}
+
 .portrait-card.is-drive-framed {
   aspect-ratio: 1150 / 1368;
   padding: 0;
@@ -633,6 +648,30 @@ img {
   28% { transform: rotate(1deg); }
 }
 
+@keyframes portrait-breeze {
+  0%, 100% {
+    transform: perspective(72rem) translate3d(0, 0, 0) rotateY(0deg) rotateZ(0deg);
+  }
+  14% {
+    transform: perspective(72rem) translate3d(-0.04rem, 0.015rem, 0) rotateY(0.24deg) rotateZ(-0.18deg);
+  }
+  31% {
+    transform: perspective(72rem) translate3d(0.055rem, 0.035rem, 0) rotateY(-0.48deg) rotateZ(0.34deg);
+  }
+  47% {
+    transform: perspective(72rem) translate3d(0.02rem, 0.01rem, 0) rotateY(-0.16deg) rotateZ(0.12deg);
+  }
+  64% {
+    transform: perspective(72rem) translate3d(-0.065rem, 0.045rem, 0) rotateY(0.56deg) rotateZ(-0.4deg);
+  }
+  79% {
+    transform: perspective(72rem) translate3d(0.035rem, 0.025rem, 0) rotateY(-0.28deg) rotateZ(0.22deg);
+  }
+  91% {
+    transform: perspective(72rem) translate3d(-0.015rem, 0.008rem, 0) rotateY(0.1deg) rotateZ(-0.08deg);
+  }
+}
+
 .noscript-note {
   position: fixed;
   z-index: 90;
@@ -770,6 +809,11 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .portrait-card.is-drive-framed .portrait-card__swing {
+    animation: none !important;
+    transform: none !important;
+  }
+
   *,
   *::before,
   *::after {
