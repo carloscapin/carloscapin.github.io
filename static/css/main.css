@@ -395,8 +395,8 @@ img {
   z-index: 7;
   bottom: 0;
   left: 0;
-  width: min(40vw, 29rem);
-  height: clamp(7.4rem, 16.8vh, 10rem);
+  width: min(43vw, 31rem);
+  height: clamp(8.2rem, 18vh, 11rem);
   filter: drop-shadow(0 -0.2rem 0.75rem rgba(0, 0, 0, 0.08));
   pointer-events: none;
 }
@@ -736,8 +736,8 @@ img {
   }
 
   .hero__folder {
-    width: 52vw;
-    height: 6.3rem;
+    width: 56vw;
+    height: 7rem;
   }
 }
 

@@ -116,6 +116,8 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(html, /<svg[\s\S]*class="hero__folder"[\s\S]*<path d="[^"]*Q[^"]*"/);
   assert.doesNotMatch(html, /class="hero__folio"/);
   assert.match(css, /\.hero__folder path\s*\{[\s\S]*fill:\s*#fbfbfa/);
+  assert.match(css, /\.hero__folder\s*\{[\s\S]*width:\s*min\(43vw, 31rem\)[\s\S]*height:\s*clamp\(8\.2rem, 18vh, 11rem\)/);
+  assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.hero__folder\s*\{[\s\S]*width:\s*56vw[\s\S]*height:\s*7rem/);
   assert.doesNotMatch(css, /\.hero__folder::before|\.hero__folder[\s\S]*clip-path:\s*polygon/);
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
   assert.match(css, /\.hero__copy\s*\{[\s\S]*right:\s*calc\(45% \+ clamp\(0\.65rem, 1vw, 1\.25rem\)\)[\s\S]*left:\s*auto/);
