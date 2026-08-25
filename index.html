@@ -18,11 +18,68 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="masthead" aria-label="Portfolio heading">
-      <p class="masthead__brand">Visual artist</p>
-      <p class="masthead__statement">Creative works &amp; visual journey</p>
-      <p class="masthead__year" data-current-year>2026</p>
+    <header class="portfolio-header">
+      <nav class="portfolio-nav" aria-label="Portfolio files">
+        <a class="portfolio-nav__identity" href="#home" aria-label="Carlos Capin portfolio cover">
+          <span class="portfolio-nav__monogram" aria-hidden="true">CC</span>
+          <span>
+            <strong>Carlos Capin</strong>
+            <small>Visual portfolio</small>
+          </span>
+        </a>
+
+        <div class="portfolio-nav__tabs" id="portfolio-nav-panel">
+          <div class="portfolio-nav__drawer-head">
+            <p><span>Portfolio index</span><strong>Files 01—05</strong></p>
+            <button class="portfolio-nav__close" id="portfolio-nav-close" type="button" aria-label="Close portfolio index">×</button>
+          </div>
+
+          <a class="file-tab file-tab--active" href="#home" aria-current="page">
+            <span class="file-tab__number">01</span>
+            <span class="file-tab__label">Cover</span>
+            <small>Open file</small>
+          </a>
+          <span class="file-tab file-tab--profile" aria-disabled="true">
+            <span class="file-tab__number">02</span>
+            <span class="file-tab__label">Profile</span>
+            <small>Next file</small>
+          </span>
+          <span class="file-tab file-tab--work" aria-disabled="true">
+            <span class="file-tab__number">03</span>
+            <span class="file-tab__label">Selected work</span>
+            <small>Next file</small>
+          </span>
+          <span class="file-tab file-tab--records" aria-disabled="true">
+            <span class="file-tab__number">04</span>
+            <span class="file-tab__label">Records</span>
+            <small>Next file</small>
+          </span>
+          <span class="file-tab file-tab--contact" aria-disabled="true">
+            <span class="file-tab__number">05</span>
+            <span class="file-tab__label">Contact</span>
+            <small>Next file</small>
+          </span>
+        </div>
+
+        <p class="portfolio-nav__meta">
+          <span>Current file</span>
+          <strong>01 / <span data-current-year>2026</span></strong>
+        </p>
+
+        <button
+          class="portfolio-nav__menu"
+          id="portfolio-nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="portfolio-nav-panel"
+        >
+          <span class="portfolio-nav__menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>Index</span>
+        </button>
+      </nav>
     </header>
+
+    <button class="portfolio-nav__backdrop" id="portfolio-nav-backdrop" type="button" aria-label="Close portfolio index" tabindex="-1"></button>
 
     <main id="main-content">
       <section class="hero" id="home" aria-labelledby="hero-title">
