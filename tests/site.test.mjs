@@ -27,13 +27,20 @@ test("Drive configuration points to Carlos' supplied folder", async () => {
   assert.doesNotMatch(config, /jerome|jirog/i);
 });
 
-test("gallery is folder-driven and supports image and video previews", async () => {
+test("the first release renders only one hero section", async () => {
+  const html = await read("index.html");
+  assert.equal((html.match(/<section\b/g) || []).length, 1);
+  assert.match(html, /<section class="hero"/);
+  assert.doesNotMatch(html, /id="(?:work|about|contact)"/);
+  assert.doesNotMatch(html, /<dialog\b|<footer\b|href="#work"/);
+});
+
+test("Drive catalog is limited to automatic hero media", async () => {
   const app = await read("static/js/app.js");
-  assert.match(app, /belongsTo\(item, "portfolio"\)/);
-  assert.match(app, /projectCategory/);
-  assert.match(app, /startsWith\("video\/"\)/);
-  assert.match(app, /drive\.google\.com\/file\/d\/\$\{encodeURIComponent\(item\.id\)\}\/preview/);
+  assert.match(app, /belongsTo\(item, "landing", "background"\)/);
+  assert.match(app, /belongsTo\(item, "landing", "portrait"\)/);
   assert.match(app, /setInterval\(loadDriveCatalog/);
+  assert.doesNotMatch(app, /renderPortfolio|projectCategory|openMediaDialog|portfolio-grid/);
 });
 
 test("Apps Script creates the required Drive structure and returns JSONP", async () => {
@@ -47,7 +54,7 @@ test("Apps Script creates the required Drive structure and returns JSONP", async
 
 test("landing remains edge-to-edge and responsive", async () => {
   const css = await read("static/css/main.css");
-  assert.match(css, /min-height:\s*100svh/);
+  assert.match(css, /height:\s*100svh/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /prefers-reduced-motion/);

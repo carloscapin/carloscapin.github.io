@@ -1,6 +1,6 @@
 # Carlos Capin Portfolio
 
-A fresh, static GitHub Pages portfolio for Carlos. The landing page follows the supplied editorial collage reference, while the gallery reads its images and videos from one Google Drive folder.
+A fresh, static GitHub Pages portfolio for Carlos. The current first phase contains one full-viewport hero only, following the supplied editorial collage reference. Its background and portrait load automatically from Google Drive.
 
 ## Media folders
 
@@ -20,14 +20,15 @@ Carlos media root
     `-- 06-other
 ```
 
-Any new folder placed directly under `02-portfolio` automatically becomes a filter/category. Prefix filenames with `01-`, `02-`, and so on when a specific display order is needed.
+Only the two `01-landing` folders are rendered during the hero-polishing phase. The organized `02-portfolio` folders remain ready for later sections but are intentionally not displayed yet. Prefix filenames with `01-`, `02-`, and so on when a specific order is needed.
 
-After the one-time connection, routine updates happen only in Drive:
+Hero media updates happen only in Drive:
 
 - Upload a file to add it.
 - Delete a file to remove it.
 - Replace a file or upload a new version to update it.
-- Move a file between category folders to recategorize it.
+- Keep the active backdrop in `01-landing/01-background`.
+- Keep the active Carlos portrait in `01-landing/02-portrait`.
 
 The page checks for changes every five minutes. The Apps Script catalog has a one-minute cache.
 
@@ -41,8 +42,6 @@ The project is linked locally through `.clasp.json`. In VS Code, use **Run and D
 - `Carlos Apps Script: Push Code`
 - `Carlos Apps Script: Deploy Web App`
 - `Carlos Apps Script: Push + Deploy`
-
-Add Carlos' real email to `contactEmail` in the same config file when it is available; the page intentionally shows a disabled contact prompt instead of publishing a guessed address.
 
 No Google API key or OAuth secret is committed to the website. The `/exec` endpoint exposes only metadata for files within Carlos' configured portfolio folder.
 
