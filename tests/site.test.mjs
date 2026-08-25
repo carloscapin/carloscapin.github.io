@@ -35,7 +35,7 @@ test("the first release renders only one hero section", async () => {
   assert.doesNotMatch(html, /<dialog\b|<footer\b|href="#work"/);
 });
 
-test("bottom icon dock changes icon color and supports a shaking minimized state", async () => {
+test("bottom icon dock auto-collapses and keeps its controls visually clean", async () => {
   const [html, css, app] = await Promise.all([
     read("index.html"),
     read("static/css/main.css"),
@@ -43,12 +43,21 @@ test("bottom icon dock changes icon color and supports a shaking minimized state
   ]);
   assert.equal((html.match(/class="icon-dock__item"/g) || []).length, 6);
   assert.match(html, /id="icon-dock-minimize"/);
+  assert.match(html, /id="icon-dock-minimize"[\s\S]*aria-hidden="true"[\s\S]*disabled/);
   assert.match(html, /id="icon-dock-restore"/);
   assert.match(css, /\.icon-dock\s*\{[\s\S]*position:\s*fixed[\s\S]*bottom:/);
   assert.match(css, /\.icon-dock__item\s*\{[\s\S]*background:\s*transparent/);
   assert.match(css, /\.icon-dock__item\[aria-pressed="true"\][\s\S]*color:\s*var\(--acid\)/);
   assert.match(css, /@keyframes dock-shake/);
+  assert.match(css, /@keyframes dock-shake[\s\S]*translateX\([^)]*\)[\s\S]*rotate\(/);
   assert.match(css, /\.icon-dock__restore\.is-visible[\s\S]*animation:\s*dock-shake/);
+  assert.match(css, /\.icon-dock\.has-scrolled \.icon-dock__minimize:not\(:disabled\)/);
+  assert.match(css, /\.icon-dock__item > span::after/);
+  assert.doesNotMatch(css, /\.icon-dock__item \+ \.icon-dock__item::before/);
+  assert.match(app, /DOCK_IDLE_MS\s*=\s*6000/);
+  assert.match(app, /scheduleDockAutoCollapse/);
+  assert.match(app, /addEventListener\("pointermove", scheduleDockAutoCollapse/);
+  assert.match(app, /addEventListener\("scroll", revealDockMinimize/);
   assert.match(app, /setDockMinimized/);
   assert.match(app, /setAttribute\("aria-pressed"/);
 });

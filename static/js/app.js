@@ -12,6 +12,8 @@
     dockRestore: document.querySelector("#icon-dock-restore"),
     dockStatus: document.querySelector("#icon-dock-status"),
   };
+  const DOCK_IDLE_MS = 6000;
+  let dockIdleTimer = 0;
 
   const stripOrderPrefix = (value = "") => value.replace(/^\s*\d+[._ -]+/, "").trim();
   const slug = (value = "") =>
@@ -63,9 +65,41 @@
     if (selectedView === "Home") {
       document.querySelector("#home")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    scheduleDockAutoCollapse();
+  }
+
+  function clearDockIdleTimer() {
+    window.clearTimeout(dockIdleTimer);
+    dockIdleTimer = 0;
+  }
+
+  function scheduleDockAutoCollapse() {
+    clearDockIdleTimer();
+    if (elements.dock.classList.contains("is-minimized")) return;
+
+    dockIdleTimer = window.setTimeout(() => {
+      const focusedControl = elements.dock.contains(document.activeElement)
+        ? document.activeElement
+        : null;
+
+      if (focusedControl?.matches(":focus-visible")) {
+        scheduleDockAutoCollapse();
+        return;
+      }
+
+      setDockMinimized(true, false);
+    }, DOCK_IDLE_MS);
+  }
+
+  function revealDockMinimize() {
+    elements.dock.classList.add("has-scrolled");
+    elements.dockMinimize.disabled = false;
+    elements.dockMinimize.setAttribute("aria-hidden", "false");
   }
 
   function setDockMinimized(minimized, moveFocus = true) {
+    clearDockIdleTimer();
     elements.dock.classList.toggle("is-minimized", minimized);
     elements.dock.inert = minimized;
     elements.dock.setAttribute("aria-hidden", String(minimized));
@@ -73,6 +107,8 @@
     elements.dockRestore.classList.toggle("is-visible", minimized);
     elements.dockRestore.setAttribute("aria-expanded", String(minimized));
     elements.dockRestore.setAttribute("aria-hidden", String(!minimized));
+
+    if (!minimized) scheduleDockAutoCollapse();
 
     if (!moveFocus) return;
 
@@ -90,7 +126,23 @@
       item.addEventListener("click", () => selectDockItem(item));
     });
     elements.dockMinimize.addEventListener("click", () => setDockMinimized(true));
-    elements.dockRestore.addEventListener("click", () => setDockMinimized(false));
+    elements.dockRestore.addEventListener("click", (event) => {
+      const usedKeyboard = event.detail === 0;
+      setDockMinimized(false, usedKeyboard);
+      if (!usedKeyboard) elements.dockRestore.blur();
+    });
+    elements.dock.addEventListener("pointerenter", scheduleDockAutoCollapse);
+    elements.dock.addEventListener("pointermove", scheduleDockAutoCollapse);
+    elements.dock.addEventListener("pointerleave", scheduleDockAutoCollapse);
+    elements.dock.addEventListener("focusin", clearDockIdleTimer);
+    elements.dock.addEventListener("focusout", () => {
+      window.requestAnimationFrame(() => {
+        if (!elements.dock.matches(":focus-within")) scheduleDockAutoCollapse();
+      });
+    });
+    window.addEventListener("scroll", revealDockMinimize, { passive: true });
+    window.addEventListener("wheel", revealDockMinimize, { passive: true });
+    window.addEventListener("touchmove", revealDockMinimize, { passive: true });
     setDockMinimized(false, false);
   }
 
