@@ -278,14 +278,14 @@ img {
   text-align: center;
 }
 
-.portrait-card__script {
+.portrait-card__name {
   font-family: var(--script);
   font-size: clamp(2.3rem, 3.65vw, 4rem);
   line-height: 0.84;
   white-space: nowrap;
 }
 
-.portrait-card__name {
+.portrait-card__label {
   color: #6c6e67;
   font-size: clamp(0.55rem, 0.72vw, 0.7rem);
   font-weight: 700;
@@ -536,13 +536,13 @@ img {
 }
 
 @keyframes dock-shake {
-  0%, 30%, 100% { transform: translateX(0) rotate(0deg); }
-  5% { transform: translateX(-0.48rem) rotate(-7deg); }
-  10% { transform: translateX(0.48rem) rotate(7deg); }
-  15% { transform: translateX(-0.34rem) rotate(-5deg); }
-  20% { transform: translateX(0.34rem) rotate(5deg); }
-  25% { transform: translateX(-0.16rem) rotate(-2deg); }
-  28% { transform: translateX(0.1rem) rotate(1deg); }
+  0%, 30%, 100% { transform: rotate(0deg); }
+  5% { transform: rotate(-7deg); }
+  10% { transform: rotate(7deg); }
+  15% { transform: rotate(-5deg); }
+  20% { transform: rotate(5deg); }
+  25% { transform: rotate(-2deg); }
+  28% { transform: rotate(1deg); }
 }
 
 .noscript-note {
@@ -639,7 +639,7 @@ img {
     min-height: 4rem;
   }
 
-  .portrait-card__script {
+  .portrait-card__name {
     font-size: clamp(1.2rem, 5vw, 1.5rem);
     white-space: nowrap;
   }
@@ -681,7 +681,7 @@ img {
     min-height: 4.5rem;
   }
 
-  .portrait-card__script {
+  .portrait-card__name {
     font-size: clamp(1.8rem, 3.65vw, 3.6rem);
   }
 }

@@ -49,7 +49,8 @@ test("bottom icon dock auto-collapses and keeps its controls visually clean", as
   assert.match(css, /\.icon-dock__item\s*\{[\s\S]*background:\s*transparent/);
   assert.match(css, /\.icon-dock__item\[aria-pressed="true"\][\s\S]*color:\s*var\(--acid\)/);
   assert.match(css, /@keyframes dock-shake/);
-  assert.match(css, /@keyframes dock-shake[\s\S]*translateX\([^)]*\)[\s\S]*rotate\(/);
+  assert.match(css, /@keyframes dock-shake[\s\S]*transform:\s*rotate\(/);
+  assert.doesNotMatch(css.match(/@keyframes dock-shake\s*\{[\s\S]*?\n\}/)?.[0] || "", /translateX/);
   assert.match(css, /\.icon-dock__restore\.is-visible[\s\S]*animation:\s*dock-shake/);
   assert.match(css, /\.icon-dock\.has-scrolled \.icon-dock__minimize:not\(:disabled\)/);
   assert.match(css, /\.icon-dock__item > span::after/);
@@ -88,7 +89,8 @@ test("landing remains edge-to-edge and responsive", async () => {
   assert.match(css, /\.hero__folder::before[\s\S]*clip-path:/);
   assert.match(css, /\.hero__drive-background\s*\{[\s\S]*background-size:\s*100% 100%[\s\S]*filter:\s*none/);
   assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
-  assert.match(css, /\.portrait-card__script\s*\{[\s\S]*font-family:\s*var\(--script\)/);
+  assert.match(html, /class="portrait-card__name">Carlos Capin<\/span>\s*<span class="portrait-card__label">Artist Portfolio/);
+  assert.match(css, /\.portrait-card__name\s*\{[\s\S]*font-family:\s*var\(--script\)/);
   assert.match(css, /\.portrait-card__media > img\s*\{[\s\S]*object-fit:\s*contain[\s\S]*scale:\s*1\.08/);
   assert.doesNotMatch(css, /\.portrait-card::before|\.portrait-card::after/);
   assert.match(css, /@media \(max-width: 620px\)/);
