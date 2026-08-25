@@ -21,23 +21,21 @@ test("GitHub Pages uses only relative local site assets", async () => {
 });
 
 test("hero typography self-hosts the display and discipline fonts", async () => {
-  const [html, css, bodoni, openSauce, bodoniLicense, openSauceLicense] = await Promise.all([
+  const [html, css, angelic, openSauce, openSauceLicense] = await Promise.all([
     read("index.html"),
     read("static/css/main.css"),
-    stat(new URL("../static/media/fonts/BodoniModa-Variable.ttf", import.meta.url)),
+    stat(new URL("../static/media/fonts/AngelicBonquesSans-Regular.ttf", import.meta.url)),
     stat(new URL("../static/media/fonts/OpenSauceSans-SemiBold.ttf", import.meta.url)),
-    read("static/media/fonts/OFL-BodoniModa.txt"),
     read("static/media/fonts/OFL-OpenSauceSans.txt"),
   ]);
-  assert.match(html, /static\/media\/fonts\/BodoniModa-Variable\.ttf/);
+  assert.match(html, /static\/media\/fonts\/AngelicBonquesSans-Regular\.ttf/);
   assert.match(html, /static\/media\/fonts\/OpenSauceSans-SemiBold\.ttf/);
-  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Bodoni Moda Display"[\s\S]*BodoniModa-Variable\.ttf/);
+  assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Angelic Bonques Sans"[\s\S]*AngelicBonquesSans-Regular\.ttf/);
   assert.match(css, /@font-face\s*\{[\s\S]*font-family:\s*"Open Sauce Sans"[\s\S]*OpenSauceSans-SemiBold\.ttf/);
-  assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)[\s\S]*font-optical-sizing:\s*auto/);
+  assert.match(css, /\.hero__title\s*\{[\s\S]*font-family:\s*var\(--serif\)/);
   assert.match(css, /\.hero__discipline\s*\{[\s\S]*font-family:\s*"Open Sauce Sans"[\s\S]*font-weight:\s*600/);
-  assert.ok(bodoni.size > 100000);
+  assert.ok(angelic.size > 15000);
   assert.ok(openSauce.size > 30000);
-  assert.match(bodoniLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
   assert.match(openSauceLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
 });
 
@@ -111,7 +109,10 @@ test("Apps Script creates the required Drive structure and returns JSONP", async
 test("landing remains edge-to-edge and responsive", async () => {
   const [html, css] = await Promise.all([read("index.html"), read("static/css/main.css")]);
   assert.match(css, /height:\s*100svh/);
-  assert.match(css, /overflow-x:\s*hidden/);
+  assert.match(css, /height:\s*100dvh/);
+  assert.match(css, /html,\s*body\s*\{[\s\S]*height:\s*100%[\s\S]*overflow:\s*hidden/);
+  assert.match(css, /\.hero\s*\{[\s\S]*min-height:\s*0[\s\S]*overflow:\s*hidden/);
+  assert.doesNotMatch(css, /\.hero\s*\{[^}]*min-height:\s*(?:32|38|40)rem/);
   assert.match(html, /<svg[\s\S]*class="hero__folder"[\s\S]*<path d="[^"]*Q[^"]*"/);
   assert.doesNotMatch(html, /class="hero__folio"/);
   assert.match(css, /\.hero__folder path\s*\{[\s\S]*fill:\s*#fbfbfa/);
