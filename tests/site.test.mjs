@@ -42,12 +42,14 @@ test("portfolio navigation uses office file tabs and a compact sidebar", async (
     read("static/js/app.js"),
   ]);
   assert.match(html, /class="portfolio-nav"/);
-  assert.equal((html.match(/class="file-tab\b/g) || []).length, 5);
-  assert.match(html, /file-tab--active[\s\S]*Cover/);
+  assert.equal((html.match(/class="file-tab\b/g) || []).length, 6);
+  assert.match(html, /file-tab--active[\s\S]*Home/);
+  assert.match(html, /portfolio-nav__details/);
+  assert.match(html, /placeholder="Search portfolio\.\.\."/);
   assert.match(html, /aria-controls="portfolio-nav-panel"/);
   assert.match(css, /clip-path:\s*polygon/);
   assert.match(css, /@media \(max-width: 900px\), \(orientation: portrait\)/);
-  assert.match(css, /\.portfolio-nav__tabs\.is-open/);
+  assert.match(css, /\.portfolio-nav__drawer\.is-open/);
   assert.match(app, /aria-expanded/);
   assert.match(app, /event\.key === "Escape"/);
   assert.match(app, /navPanel\.inert/);
